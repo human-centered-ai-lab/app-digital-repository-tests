@@ -21,7 +21,7 @@ Collection of python script to test and evaluate tools to build TDR, Trusted Dig
     * `docker-compose -p d7 -f docker/docker-compose.yml -f docker/docker-compose-rest.yml -f docker/db.entities.yml up -d`
     * `docker-compose -p d7 -f docker/cli.yml -f docker/cli.assetstore.yml run --rm dspace-cli`
 
-* load entities
+* make admin user
     * `docker-compose -p d7 -f docker/cli.yml run --rm dspace-cli create-administrator -e v@bibbox.org -f admin -l user -p vendetta -c en`
 
 * restart 
