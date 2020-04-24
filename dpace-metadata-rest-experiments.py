@@ -8,7 +8,7 @@ class MetadataFields:
         self.h      = header
 
     def  schemas (self):
-        
+
         example = {
             "id": 1,
             "namespace": "http://dublincore.org/documents/dcmi-terms/",
@@ -33,8 +33,6 @@ class MetadataFields:
             if (page  >= totalPages):
                 stillPagesToRead = False
         return metadataschemas
-
-
 
 
     def metadataFieldsForSchema (self, schema):
@@ -65,10 +63,11 @@ class MetadataFields:
                 stillPagesToRead = False
         return metadatafields
 
-    def printMetadataFields (self, schema, metadatafields):
+
+    def printMetadataFields (self, prefix, metadatafields):
         i = 1
         for mf in metadatafields:
-            infostring = str(i) + ':  ' + schema + '.' + mf['element']
+            infostring = str(i) + ':  ' + prefix + '.' + mf['element']
             if ( type (mf['qualifier']) == str):
                 if len (mf['qualifier'])  > 0:
                     infostring = infostring + '.'+ mf['qualifier']
