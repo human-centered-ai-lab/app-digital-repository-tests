@@ -6,8 +6,7 @@ Collection of python script to test and evaluate tools to build TDR, Trusted Dig
 
 ### setup of dspace with docker on silicolab server
 
-* latest instruction how to setup dSpace 7 with docker
-    * `https://wiki.lyrasis.org/display/DSPACE/Try+out+DSpace+7#TryoutDSpace7-InstallviaDocker`
+* [latest instruction how to setup dSpace 7 with docker](https://wiki.lyrasis.org/display/DSPACE/Try+out+DSpace+7#TryoutDSpace7-InstallviaDocker)
 
 
 * install steps
@@ -38,6 +37,13 @@ Collection of python script to test and evaluate tools to build TDR, Trusted Dig
     * http://dspace-rest.silicolab.bibbox.org/server/#/server/api
     *   user: v
     *   password: vendetta
+
+## Usefull Links
+
+* dSpace REST Interface
+    * https://github.com/DSpace/
+    * https://dspace-labs.github.io/DSpace7RestTutorial/preparation
+
 
 
 
