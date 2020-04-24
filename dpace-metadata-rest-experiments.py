@@ -8,6 +8,14 @@ class MetadataFields:
         self.h      = header
 
     def  schemas (self):
+        
+        example = {
+            "id": 1,
+            "namespace": "http://dublincore.org/documents/dcmi-terms/",
+            "prefix": "dc",
+            "type": "metadataschema"
+        }
+
         metadataschemas = []
         stillPagesToRead = True
         page = 0
@@ -26,7 +34,18 @@ class MetadataFields:
                 stillPagesToRead = False
         return metadataschemas
 
+
+
+
     def metadataFieldsForSchema (self, schema):
+        example = {
+            "id": 434,
+            "element": "quality",
+            "qualifier": None,
+            "scopeNote": "Q of the p slide",
+            "type": "metadatafield"
+        }
+
         metadatafields = []
         stillPagesToRead = True
         page = 0
