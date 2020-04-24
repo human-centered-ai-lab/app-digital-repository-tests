@@ -34,10 +34,10 @@ Collection of python script to test and evaluate tools to build TDR, Trusted Dig
 
 * how to access the demo
 
-    * (http://dspace.silicolab.bibbox.org/home)
-    * (http://dspace-rest.silicolab.bibbox.org/server/#/server/api)
-    *  user: v
-    *  password: vendetta
+    * http://dspace.silicolab.bibbox.org/home
+    * http://dspace-rest.silicolab.bibbox.org/server/#/server/api
+    *   user: v
+    *   password: vendetta
 
 
 
