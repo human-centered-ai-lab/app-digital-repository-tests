@@ -1,0 +1,43 @@
+[
+    {
+        "element": "identifier",
+        "qualifier": "label",
+        "scopeNote": "Identifier printed on the Label"
+    },
+    {
+        "element": "identifier",
+        "qualifier": "workflow",
+        "scopeNote": "Unique Identifier in the scanning workflow"
+    },
+    {
+        "element": "dimension",
+        "qualifier": "x",
+        "scopeNote": "Horizontal Slide Dimension"
+    },
+    {
+        "element": "dimension",
+        "qualifier": "y",
+        "scopeNote": "Vertical Slide Dimension"
+    },
+    {
+        "element": "comment",
+        "qualifier": null,
+        "scopeNote": "Free Text Comment"
+    },
+    {
+        "element": "label",
+        "qualifier": "image",
+        "scopeNote": "preview image of the label area"
+    },
+    {
+        "element": "label",
+        "qualifier": "transcribed",
+        "scopeNote": "Vertical Slide Dimension"
+    },
+    {
+        "element": "label",
+        "qualifier": "normalized",
+        "scopeNote": "Vertical Slide Dimension"
+    },
+
+]

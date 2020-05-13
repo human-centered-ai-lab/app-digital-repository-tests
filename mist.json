@@ -1,0 +1,1162 @@
+{
+  "id": null,
+  "scope": "eb6be443-f55e-466c-b2b3-aa6bae97686d",
+  "query": null,
+  "appliedFilters": null,
+  "sort": null,
+  "configuration": null,
+  "type": "discover",
+  "_links": {
+    "self": {
+      "href": "http://dspace-rest.silicolab.bibbox.org/server/api/discover/search/objects?scope=eb6be443-f55e-466c-b2b3-aa6bae97686d"
+    }
+  },
+  "_embedded": {
+    "searchResult": {
+      "_embedded": {
+        "objects": [
+          {
+            "hitHighlights": null,
+            "type": "discover",
+            "_links": {
+              "indexableObject": {
+                "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/a1fe9fd3-74b0-4339-95be-db558d41fc82"
+              }
+            },
+            "_embedded": {
+              "indexableObject": {
+                "id": "a1fe9fd3-74b0-4339-95be-db558d41fc82",
+                "uuid": "a1fe9fd3-74b0-4339-95be-db558d41fc82",
+                "name": "SLIDE 912",
+                "handle": "123456789/506",
+                "metadata": {
+                  "dc.contributor.author": [
+                    {
+                      "value": "Plass, Markus",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.date.accessioned": [
+                    {
+                      "value": "2020-04-27T09:50:14Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    },
+                    {
+                      "value": "2020-04-27T13:28:13Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 1
+                    }
+                  ],
+                  "dc.date.available": [
+                    {
+                      "value": "2020-04-27T09:50:14Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    },
+                    {
+                      "value": "2020-04-27T13:28:13Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 1
+                    }
+                  ],
+                  "dc.date.issued": [
+                    {
+                      "value": "2020",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.identifier.uri": [
+                    {
+                      "value": "http://dspace.silicolab.bibbox.org/123456789/506",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.title": [
+                    {
+                      "value": "SLIDE 912",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ]
+                },
+                "inArchive": true,
+                "discoverable": true,
+                "withdrawn": false,
+                "lastModified": "2020-04-27T13:28:13.682+0000",
+                "type": "item",
+                "_links": {
+                  "bundles": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/a1fe9fd3-74b0-4339-95be-db558d41fc82/bundles"
+                  },
+                  "mappedCollections": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/a1fe9fd3-74b0-4339-95be-db558d41fc82/mappedCollections"
+                  },
+                  "owningCollection": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/a1fe9fd3-74b0-4339-95be-db558d41fc82/owningCollection"
+                  },
+                  "relationships": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/a1fe9fd3-74b0-4339-95be-db558d41fc82/relationships"
+                  },
+                  "version": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/a1fe9fd3-74b0-4339-95be-db558d41fc82/version"
+                  },
+                  "templateItemOf": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/a1fe9fd3-74b0-4339-95be-db558d41fc82/templateItemOf"
+                  },
+                  "self": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/a1fe9fd3-74b0-4339-95be-db558d41fc82"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "hitHighlights": null,
+            "type": "discover",
+            "_links": {
+              "indexableObject": {
+                "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/7b111ca3-d069-48a9-aee6-8c41c0e8fe38"
+              }
+            },
+            "_embedded": {
+              "indexableObject": {
+                "id": "7b111ca3-d069-48a9-aee6-8c41c0e8fe38",
+                "uuid": "7b111ca3-d069-48a9-aee6-8c41c0e8fe38",
+                "name": "SLIDE 4711",
+                "handle": "123456789/508",
+                "metadata": {
+                  "dc.contributor.author": [
+                    {
+                      "value": "Plass, Markus",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.date.accessioned": [
+                    {
+                      "value": "2020-04-27T09:50:14Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    },
+                    {
+                      "value": "2020-04-27T13:30:46Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 1
+                    }
+                  ],
+                  "dc.date.available": [
+                    {
+                      "value": "2020-04-27T09:50:14Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    },
+                    {
+                      "value": "2020-04-27T13:30:46Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 1
+                    }
+                  ],
+                  "dc.date.issued": [
+                    {
+                      "value": "2020",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.identifier.uri": [
+                    {
+                      "value": "http://dspace.silicolab.bibbox.org/123456789/508",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.title": [
+                    {
+                      "value": "SLIDE 4711",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ]
+                },
+                "inArchive": true,
+                "discoverable": true,
+                "withdrawn": false,
+                "lastModified": "2020-04-27T13:30:46.914+0000",
+                "type": "item",
+                "_links": {
+                  "bundles": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/7b111ca3-d069-48a9-aee6-8c41c0e8fe38/bundles"
+                  },
+                  "mappedCollections": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/7b111ca3-d069-48a9-aee6-8c41c0e8fe38/mappedCollections"
+                  },
+                  "owningCollection": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/7b111ca3-d069-48a9-aee6-8c41c0e8fe38/owningCollection"
+                  },
+                  "relationships": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/7b111ca3-d069-48a9-aee6-8c41c0e8fe38/relationships"
+                  },
+                  "version": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/7b111ca3-d069-48a9-aee6-8c41c0e8fe38/version"
+                  },
+                  "templateItemOf": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/7b111ca3-d069-48a9-aee6-8c41c0e8fe38/templateItemOf"
+                  },
+                  "self": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/7b111ca3-d069-48a9-aee6-8c41c0e8fe38"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "hitHighlights": null,
+            "type": "discover",
+            "_links": {
+              "indexableObject": {
+                "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/b91229aa-ec73-4498-8fba-5e352819a8a6"
+              }
+            },
+            "_embedded": {
+              "indexableObject": {
+                "id": "b91229aa-ec73-4498-8fba-5e352819a8a6",
+                "uuid": "b91229aa-ec73-4498-8fba-5e352819a8a6",
+                "name": "SLIDE 008",
+                "handle": "123456789/505",
+                "metadata": {
+                  "dc.contributor.author": [
+                    {
+                      "value": "Plass, Markus",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.date.accessioned": [
+                    {
+                      "value": "2020-04-27T09:50:14Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    },
+                    {
+                      "value": "2020-04-27T13:27:44Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 1
+                    }
+                  ],
+                  "dc.date.available": [
+                    {
+                      "value": "2020-04-27T09:50:14Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    },
+                    {
+                      "value": "2020-04-27T13:27:44Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 1
+                    }
+                  ],
+                  "dc.date.issued": [
+                    {
+                      "value": "2020",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.identifier.uri": [
+                    {
+                      "value": "http://dspace.silicolab.bibbox.org/123456789/505",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.title": [
+                    {
+                      "value": "SLIDE 008",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ]
+                },
+                "inArchive": true,
+                "discoverable": true,
+                "withdrawn": false,
+                "lastModified": "2020-04-27T13:27:44.995+0000",
+                "type": "item",
+                "_links": {
+                  "bundles": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/b91229aa-ec73-4498-8fba-5e352819a8a6/bundles"
+                  },
+                  "mappedCollections": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/b91229aa-ec73-4498-8fba-5e352819a8a6/mappedCollections"
+                  },
+                  "owningCollection": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/b91229aa-ec73-4498-8fba-5e352819a8a6/owningCollection"
+                  },
+                  "relationships": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/b91229aa-ec73-4498-8fba-5e352819a8a6/relationships"
+                  },
+                  "version": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/b91229aa-ec73-4498-8fba-5e352819a8a6/version"
+                  },
+                  "templateItemOf": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/b91229aa-ec73-4498-8fba-5e352819a8a6/templateItemOf"
+                  },
+                  "self": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/b91229aa-ec73-4498-8fba-5e352819a8a6"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "hitHighlights": null,
+            "type": "discover",
+            "_links": {
+              "indexableObject": {
+                "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/54585291-8185-4324-afc3-fe4235e97fb9"
+              }
+            },
+            "_embedded": {
+              "indexableObject": {
+                "id": "54585291-8185-4324-afc3-fe4235e97fb9",
+                "uuid": "54585291-8185-4324-afc3-fe4235e97fb9",
+                "name": "SLIDE 4711",
+                "handle": "123456789/507",
+                "metadata": {
+                  "dc.contributor.author": [
+                    {
+                      "value": "Plass, Markus",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.date.accessioned": [
+                    {
+                      "value": "2020-04-27T09:50:14Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    },
+                    {
+                      "value": "2020-04-27T13:30:14Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 1
+                    }
+                  ],
+                  "dc.date.available": [
+                    {
+                      "value": "2020-04-27T09:50:14Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    },
+                    {
+                      "value": "2020-04-27T13:30:14Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 1
+                    }
+                  ],
+                  "dc.date.issued": [
+                    {
+                      "value": "2020",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.identifier.uri": [
+                    {
+                      "value": "http://dspace.silicolab.bibbox.org/123456789/507",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.title": [
+                    {
+                      "value": "SLIDE 4711",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ]
+                },
+                "inArchive": true,
+                "discoverable": true,
+                "withdrawn": false,
+                "lastModified": "2020-04-27T13:30:14.176+0000",
+                "type": "item",
+                "_links": {
+                  "bundles": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/54585291-8185-4324-afc3-fe4235e97fb9/bundles"
+                  },
+                  "mappedCollections": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/54585291-8185-4324-afc3-fe4235e97fb9/mappedCollections"
+                  },
+                  "owningCollection": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/54585291-8185-4324-afc3-fe4235e97fb9/owningCollection"
+                  },
+                  "relationships": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/54585291-8185-4324-afc3-fe4235e97fb9/relationships"
+                  },
+                  "version": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/54585291-8185-4324-afc3-fe4235e97fb9/version"
+                  },
+                  "templateItemOf": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/54585291-8185-4324-afc3-fe4235e97fb9/templateItemOf"
+                  },
+                  "self": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/54585291-8185-4324-afc3-fe4235e97fb9"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "hitHighlights": null,
+            "type": "discover",
+            "_links": {
+              "indexableObject": {
+                "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/568c6563-2f06-499e-a230-07158babb203"
+              }
+            },
+            "_embedded": {
+              "indexableObject": {
+                "id": "568c6563-2f06-499e-a230-07158babb203",
+                "uuid": "568c6563-2f06-499e-a230-07158babb203",
+                "name": "SLIDE 4711",
+                "handle": "123456789/509",
+                "metadata": {
+                  "dc.contributor.author": [
+                    {
+                      "value": "Plass, Markus",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.date.accessioned": [
+                    {
+                      "value": "2020-04-27T09:50:14Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    },
+                    {
+                      "value": "2020-04-27T13:33:47Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 1
+                    }
+                  ],
+                  "dc.date.available": [
+                    {
+                      "value": "2020-04-27T09:50:14Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    },
+                    {
+                      "value": "2020-04-27T13:33:47Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 1
+                    }
+                  ],
+                  "dc.identifier.uri": [
+                    {
+                      "value": "http://dspace.silicolab.bibbox.org/123456789/509",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.title": [
+                    {
+                      "value": "SLIDE 4711",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "slide.dimensions.x": [
+                    {
+                      "value": "12",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ]
+                },
+                "inArchive": true,
+                "discoverable": true,
+                "withdrawn": false,
+                "lastModified": "2020-04-27T13:33:47.550+0000",
+                "type": "item",
+                "_links": {
+                  "bundles": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/568c6563-2f06-499e-a230-07158babb203/bundles"
+                  },
+                  "mappedCollections": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/568c6563-2f06-499e-a230-07158babb203/mappedCollections"
+                  },
+                  "owningCollection": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/568c6563-2f06-499e-a230-07158babb203/owningCollection"
+                  },
+                  "relationships": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/568c6563-2f06-499e-a230-07158babb203/relationships"
+                  },
+                  "version": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/568c6563-2f06-499e-a230-07158babb203/version"
+                  },
+                  "templateItemOf": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/568c6563-2f06-499e-a230-07158babb203/templateItemOf"
+                  },
+                  "self": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/568c6563-2f06-499e-a230-07158babb203"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "hitHighlights": null,
+            "type": "discover",
+            "_links": {
+              "indexableObject": {
+                "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/8555cd70-e0cf-4288-a230-923803e88e68"
+              }
+            },
+            "_embedded": {
+              "indexableObject": {
+                "id": "8555cd70-e0cf-4288-a230-923803e88e68",
+                "uuid": "8555cd70-e0cf-4288-a230-923803e88e68",
+                "name": "SLIDE XXXXX",
+                "handle": "123456789/511",
+                "metadata": {
+                  "dc.contributor.author": [
+                    {
+                      "value": "Plass, Markus",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.date.accessioned": [
+                    {
+                      "value": "2020-04-27T09:50:14Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    },
+                    {
+                      "value": "2020-04-27T13:34:48Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 1
+                    }
+                  ],
+                  "dc.date.available": [
+                    {
+                      "value": "2020-04-27T09:50:14Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    },
+                    {
+                      "value": "2020-04-27T13:34:48Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 1
+                    }
+                  ],
+                  "dc.identifier.uri": [
+                    {
+                      "value": "http://dspace.silicolab.bibbox.org/123456789/511",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.title": [
+                    {
+                      "value": "SLIDE XXXXX",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "slide.dimensions.x": [
+                    {
+                      "value": "12",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ]
+                },
+                "inArchive": true,
+                "discoverable": true,
+                "withdrawn": false,
+                "lastModified": "2020-04-27T13:34:48.769+0000",
+                "type": "item",
+                "_links": {
+                  "bundles": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/8555cd70-e0cf-4288-a230-923803e88e68/bundles"
+                  },
+                  "mappedCollections": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/8555cd70-e0cf-4288-a230-923803e88e68/mappedCollections"
+                  },
+                  "owningCollection": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/8555cd70-e0cf-4288-a230-923803e88e68/owningCollection"
+                  },
+                  "relationships": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/8555cd70-e0cf-4288-a230-923803e88e68/relationships"
+                  },
+                  "version": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/8555cd70-e0cf-4288-a230-923803e88e68/version"
+                  },
+                  "templateItemOf": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/8555cd70-e0cf-4288-a230-923803e88e68/templateItemOf"
+                  },
+                  "self": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/8555cd70-e0cf-4288-a230-923803e88e68"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "hitHighlights": null,
+            "type": "discover",
+            "_links": {
+              "indexableObject": {
+                "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/728afa5e-b330-4030-8007-eb14174dbd0e"
+              }
+            },
+            "_embedded": {
+              "indexableObject": {
+                "id": "728afa5e-b330-4030-8007-eb14174dbd0e",
+                "uuid": "728afa5e-b330-4030-8007-eb14174dbd0e",
+                "name": "SLIDE 008",
+                "handle": "123456789/504",
+                "metadata": {
+                  "dc.contributor.author": [
+                    {
+                      "value": "Plass, Markus",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.date.accessioned": [
+                    {
+                      "value": "2020-04-27T09:50:14Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.date.available": [
+                    {
+                      "value": "2020-04-27T09:50:14Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.date.issued": [
+                    {
+                      "value": "2020",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.identifier.uri": [
+                    {
+                      "value": "http://dspace.silicolab.bibbox.org/123456789/504",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.title": [
+                    {
+                      "value": "SLIDE 008",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ]
+                },
+                "inArchive": true,
+                "discoverable": true,
+                "withdrawn": false,
+                "lastModified": "2020-04-27T12:17:29.339+0000",
+                "type": "item",
+                "_links": {
+                  "bundles": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/728afa5e-b330-4030-8007-eb14174dbd0e/bundles"
+                  },
+                  "mappedCollections": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/728afa5e-b330-4030-8007-eb14174dbd0e/mappedCollections"
+                  },
+                  "owningCollection": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/728afa5e-b330-4030-8007-eb14174dbd0e/owningCollection"
+                  },
+                  "relationships": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/728afa5e-b330-4030-8007-eb14174dbd0e/relationships"
+                  },
+                  "version": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/728afa5e-b330-4030-8007-eb14174dbd0e/version"
+                  },
+                  "templateItemOf": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/728afa5e-b330-4030-8007-eb14174dbd0e/templateItemOf"
+                  },
+                  "self": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/728afa5e-b330-4030-8007-eb14174dbd0e"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "hitHighlights": null,
+            "type": "discover",
+            "_links": {
+              "indexableObject": {
+                "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/21421937-7af1-45d8-bdbe-2f66c0ade7ea"
+              }
+            },
+            "_embedded": {
+              "indexableObject": {
+                "id": "21421937-7af1-45d8-bdbe-2f66c0ade7ea",
+                "uuid": "21421937-7af1-45d8-bdbe-2f66c0ade7ea",
+                "name": "SLIDE HEIMO",
+                "handle": "123456789/512",
+                "metadata": {
+                  "dc.contributor.author": [
+                    {
+                      "value": "Plass, Markus",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.date.accessioned": [
+                    {
+                      "value": "2020-04-27T09:50:14Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    },
+                    {
+                      "value": "2020-04-27T13:38:51Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 1
+                    }
+                  ],
+                  "dc.date.available": [
+                    {
+                      "value": "2020-04-27T09:50:14Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    },
+                    {
+                      "value": "2020-04-27T13:38:51Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 1
+                    }
+                  ],
+                  "dc.identifier.uri": [
+                    {
+                      "value": "http://dspace.silicolab.bibbox.org/123456789/512",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.title": [
+                    {
+                      "value": "SLIDE HEIMO",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ]
+                },
+                "inArchive": true,
+                "discoverable": true,
+                "withdrawn": false,
+                "lastModified": "2020-04-27T14:24:14.767+0000",
+                "type": "item",
+                "_links": {
+                  "bundles": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/21421937-7af1-45d8-bdbe-2f66c0ade7ea/bundles"
+                  },
+                  "mappedCollections": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/21421937-7af1-45d8-bdbe-2f66c0ade7ea/mappedCollections"
+                  },
+                  "owningCollection": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/21421937-7af1-45d8-bdbe-2f66c0ade7ea/owningCollection"
+                  },
+                  "relationships": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/21421937-7af1-45d8-bdbe-2f66c0ade7ea/relationships"
+                  },
+                  "version": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/21421937-7af1-45d8-bdbe-2f66c0ade7ea/version"
+                  },
+                  "templateItemOf": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/21421937-7af1-45d8-bdbe-2f66c0ade7ea/templateItemOf"
+                  },
+                  "self": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/21421937-7af1-45d8-bdbe-2f66c0ade7ea"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "hitHighlights": null,
+            "type": "discover",
+            "_links": {
+              "indexableObject": {
+                "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/c2995bfb-b944-4f9b-9edb-36c8ab66d3e1"
+              }
+            },
+            "_embedded": {
+              "indexableObject": {
+                "id": "c2995bfb-b944-4f9b-9edb-36c8ab66d3e1",
+                "uuid": "c2995bfb-b944-4f9b-9edb-36c8ab66d3e1",
+                "name": "SLIDE XXXXX",
+                "handle": "123456789/510",
+                "metadata": {
+                  "dc.contributor.author": [
+                    {
+                      "value": "Plass, Markus",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.date.accessioned": [
+                    {
+                      "value": "2020-04-27T09:50:14Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    },
+                    {
+                      "value": "2020-04-27T13:34:13Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 1
+                    }
+                  ],
+                  "dc.date.available": [
+                    {
+                      "value": "2020-04-27T09:50:14Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    },
+                    {
+                      "value": "2020-04-27T13:34:13Z",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 1
+                    }
+                  ],
+                  "dc.identifier.uri": [
+                    {
+                      "value": "http://dspace.silicolab.bibbox.org/123456789/510",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ],
+                  "dc.title": [
+                    {
+                      "value": "SLIDE XXXXX",
+                      "language": null,
+                      "authority": null,
+                      "confidence": -1,
+                      "place": 0
+                    }
+                  ]
+                },
+                "inArchive": true,
+                "discoverable": true,
+                "withdrawn": false,
+                "lastModified": "2020-04-27T21:01:02.619+0000",
+                "type": "item",
+                "_links": {
+                  "bundles": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/c2995bfb-b944-4f9b-9edb-36c8ab66d3e1/bundles"
+                  },
+                  "mappedCollections": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/c2995bfb-b944-4f9b-9edb-36c8ab66d3e1/mappedCollections"
+                  },
+                  "owningCollection": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/c2995bfb-b944-4f9b-9edb-36c8ab66d3e1/owningCollection"
+                  },
+                  "relationships": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/c2995bfb-b944-4f9b-9edb-36c8ab66d3e1/relationships"
+                  },
+                  "version": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/c2995bfb-b944-4f9b-9edb-36c8ab66d3e1/version"
+                  },
+                  "templateItemOf": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/c2995bfb-b944-4f9b-9edb-36c8ab66d3e1/templateItemOf"
+                  },
+                  "self": {
+                    "href": "http://dspace-rest.silicolab.bibbox.org/server/api/core/items/c2995bfb-b944-4f9b-9edb-36c8ab66d3e1"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "page": {
+        "number": 0,
+        "size": 20,
+        "totalPages": 1,
+        "totalElements": 9
+      },
+      "_links": {
+        "self": {
+          "href": "http://dspace-rest.silicolab.bibbox.org/server/api/discover/search/objects?scope=eb6be443-f55e-466c-b2b3-aa6bae97686d"
+        }
+      }
+    },
+    "facets": [
+      {
+        "name": "author",
+        "facetType": "text",
+        "facetLimit": 5,
+        "minValue": "Abouzaid, Mohammed",
+        "maxValue": "Železný, J",
+        "page": {
+          "number": 0,
+          "size": 5
+        },
+        "_links": {
+          "self": {
+            "href": "http://dspace-rest.silicolab.bibbox.org/server/api/discover/facets/author?scope=eb6be443-f55e-466c-b2b3-aa6bae97686d"
+          }
+        },
+        "_embedded": {
+          "values": [
+            {
+              "label": "Plass, Markus",
+              "count": 9,
+              "type": "discover",
+              "_links": {
+                "search": {
+                  "href": "http://dspace-rest.silicolab.bibbox.org/server/api/discover/search/objects?scope=eb6be443-f55e-466c-b2b3-aa6bae97686d&f.author=Plass, Markus,equals"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "subject",
+        "facetType": "hierarchical",
+        "facetLimit": 5,
+        "_links": {
+          "self": {
+            "href": "http://dspace-rest.silicolab.bibbox.org/server/api/discover/facets/subject?scope=eb6be443-f55e-466c-b2b3-aa6bae97686d"
+          }
+        },
+        "_embedded": {
+          "values": []
+        }
+      },
+      {
+        "name": "dateIssued",
+        "facetType": "date",
+        "facetLimit": 5,
+        "minValue": "01/05/16",
+        "maxValue": "31/05/16",
+        "page": {
+          "number": 0,
+          "size": 5
+        },
+        "_links": {
+          "self": {
+            "href": "http://dspace-rest.silicolab.bibbox.org/server/api/discover/facets/dateIssued?scope=eb6be443-f55e-466c-b2b3-aa6bae97686d"
+          }
+        },
+        "_embedded": {
+          "values": [
+            {
+              "label": "2020",
+              "count": 5,
+              "type": "discover",
+              "_links": {
+                "search": {
+                  "href": "http://dspace-rest.silicolab.bibbox.org/server/api/discover/search/objects?scope=eb6be443-f55e-466c-b2b3-aa6bae97686d&f.dateIssued=2020,equals"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "has_content_in_original_bundle",
+        "facetType": "standard",
+        "facetLimit": 2,
+        "page": {
+          "number": 0,
+          "size": 2
+        },
+        "_links": {
+          "self": {
+            "href": "http://dspace-rest.silicolab.bibbox.org/server/api/discover/facets/has_content_in_original_bundle?scope=eb6be443-f55e-466c-b2b3-aa6bae97686d"
+          }
+        },
+        "_embedded": {
+          "values": [
+            {
+              "label": "false",
+              "count": 8,
+              "type": "discover",
+              "_links": {
+                "search": {
+                  "href": "http://dspace-rest.silicolab.bibbox.org/server/api/discover/search/objects?scope=eb6be443-f55e-466c-b2b3-aa6bae97686d&f.has_content_in_original_bundle=false,equals"
+                }
+              }
+            },
+            {
+              "label": "true",
+              "count": 1,
+              "type": "discover",
+              "_links": {
+                "search": {
+                  "href": "http://dspace-rest.silicolab.bibbox.org/server/api/discover/search/objects?scope=eb6be443-f55e-466c-b2b3-aa6bae97686d&f.has_content_in_original_bundle=true,equals"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "entityType",
+        "facetType": "text",
+        "facetLimit": 5,
+        "_links": {
+          "self": {
+            "href": "http://dspace-rest.silicolab.bibbox.org/server/api/discover/facets/entityType?scope=eb6be443-f55e-466c-b2b3-aa6bae97686d"
+          }
+        },
+        "_embedded": {
+          "values": []
+        }
+      }
+    ]
+  }
+}
