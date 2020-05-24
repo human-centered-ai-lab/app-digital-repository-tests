@@ -1,0 +1,68 @@
+[
+    {
+        "element": "identifier",
+        "qualifier": null,
+        "scopeNote": "Unique identifier of the file"
+    },
+    {
+        "element": "size",
+        "qualifier": null,
+        "scopeNote": "File size in byte"
+    },
+
+    {
+        "element": "format",
+        "qualifier": "type",
+        "scopeNote": "File format"
+    },
+    {
+        "element": "format",
+        "qualifier": "version",
+        "scopeNote": "File format version"
+    },
+    {
+        "element": "MD5Checksum",
+        "qualifier": null,
+        "scopeNote": "MD5 Checksum of the file"
+    },
+    {
+        "element": "compression",
+        "qualifier": "type",
+        "scopeNote": "Compession type of the whole slide image"
+    },
+    {
+        "element": "compression",
+        "qualifier": "quality",
+        "scopeNote": "Compession quality of the whole slide image"
+    },
+    {
+        "element": "usage",
+        "qualifier": null,
+        "scopeNote": "Type of the file format usage (Archive, Processing, Viewing, ML....)"
+    },
+    {
+        "element": "anonymized",
+        "qualifier":  null,
+        "scopeNote": "Flag if the whole slide image is anonymized"
+    },
+    {
+        "element": "contains",
+        "qualifier":  "previewimage",
+        "scopeNote": "Flag if a preview image is available"
+    },
+    {
+        "element": "contains",
+        "qualifier":  "label",
+        "scopeNote": "Flag if a label image is available"
+    },
+    {
+        "element": "contains",
+        "qualifier":  "label",
+        "scopeNote": "Flag if a label image is available"
+    },
+    {
+        "element": "contains",
+        "qualifier":  "pyramidlevels",
+        "scopeNote": "Flag if pyramid levels are available"
+    }
+]

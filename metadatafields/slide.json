@@ -1,0 +1,124 @@
+[
+    {
+        "element": "identifier",
+        "qualifier": "label",
+        "scopeNote": "Identifier printed on the Label"
+    },
+    {
+        "element": "identifier",
+        "qualifier": "uuidslide",
+        "scopeNote": "UUID of the physical slide"
+    },
+    {
+        "element": "identifier",
+        "qualifier": "workflow",
+        "scopeNote": "Unique Identifier in the scanning workflow"
+    },
+    {
+        "element": "source",
+        "qualifier": "organism",
+        "scopeNote": "Type of the organism (Human, Mouse,....)"
+    },
+    {
+        "element": "source",
+        "qualifier": "organismpart",
+        "scopeNote": "Part of the organism (Colon, Liver,....)"
+    },
+    {
+        "element": "source",
+        "qualifier": "extractionmethod",
+        "scopeNote": "Type of the extraction of the primary sample (Biopsy, Operational Sample, ...)"
+    },
+    {
+        "element": "source",
+        "qualifier": "studytags",
+        "scopeNote": "Additional informations about the study, coded as JSON-LD"
+    },
+    {
+        "element": "source",
+        "qualifier": "casetags",
+        "scopeNote": "Additional informations about the case, coded as JSON-LD"
+    },
+    {
+        "element": "source",
+        "qualifier": "primarysampletags",
+        "scopeNote": "Additional informations about the primary sample, coded as JSON-LD"
+    },
+    {
+        "element": "source",
+        "qualifier": "sourcetags",
+        "scopeNote": "Additional informations about the sample source (patient, donor), coded as JSON-LD"
+    },
+    {
+        "element": "type",
+        "qualifier": null,
+        "scopeNote": "Slide type (TMA, Cellsmear, ...)"
+    },
+    {
+        "element": "staining",
+        "qualifier": null,
+        "scopeNote": "Staining method of the tissue"
+    },
+    {
+        "element": "dimension",
+        "qualifier": "width",
+        "scopeNote": "Horizontal slide dimension in mm"
+    },
+    {
+        "element": "dimension",
+        "qualifier": "height",
+        "scopeNote": "Vertical slide dimension in mm"
+    },
+    {
+        "element": "dimension",
+        "qualifier": "label-width",
+        "scopeNote": "Horizontal dimension of the label area in mm"
+    },
+    {
+        "element": "dimension",
+        "qualifier": "label-height",
+        "scopeNote": "Vertical dimension of the label area in mm"
+    },
+    {
+        "element": "creationdate",
+        "qualifier": null,
+        "scopeNote": "The date and time (YYYYMMDDThhmm) when the sample was created"
+    },
+
+    {
+        "element": "caseUUID",
+        "qualifier": null,
+        "scopeNote": "UUID of case"
+    },
+    {
+        "element": "comment",
+        "qualifier": null,
+        "scopeNote": "Comment, free text"
+    },
+    {
+        "element": "label",
+        "qualifier": "image",
+        "scopeNote": "preview image of the label area"
+    },
+    {
+        "element": "label",
+        "qualifier": "transcribed",
+        "scopeNote": "text as transcribed"
+    },
+    {
+        "element": "label",
+        "qualifier": "normalized",
+        "scopeNote": "normalized label"
+    },
+    {
+        "element": "previewimage",
+        "qualifier": "pre",
+        "scopeNote": "Preview image before cleaning and processing"
+    },
+    {
+        "element": "previewimage",
+        "qualifier": "original",
+        "scopeNote": "Preview image after cleaning before scanning"
+    }
+
+]

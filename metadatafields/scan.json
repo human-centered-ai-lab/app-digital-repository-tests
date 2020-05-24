@@ -1,0 +1,179 @@
+[
+    {
+        "element": "identifier",
+        "qualifier": null,
+        "scopeNote": "Unique identifier of the scan"
+    },
+    {
+        "element": "operator",
+        "qualifier":  null,
+        "scopeNote": "Responsible operator of the scanning process"
+    },
+    {
+        "element": "condition",
+        "qualifier": "description",
+        "scopeNote": "Slide conditions before scanning (e.g: scanable, unscanable, bleached, cracked cover,..)"
+    },
+ 
+    {
+        "element": "condition",
+        "qualifier": "tags",
+        "scopeNote": "Additional informations about the slide condition, coded as JSON-LD"
+    },
+    {
+        "element": "condition",
+        "qualifier": "preprocessing",
+        "scopeNote": "Operations performed before scanning (e.g: Cleaned, Re-covered)"
+    },
+    {
+        "element": "scanner",
+        "qualifier": "manufacturer",
+        "scopeNote": "Manufacturer and type of the scanner"
+    },
+    {
+        "element": "scanner",
+        "qualifier": "type",
+        "scopeNote": "Type of the scanner"
+    },
+    {
+        "element": "scanner",
+        "qualifier": "serial-number",
+        "scopeNote": "Serial Number of the scanner"
+    },
+    {
+        "element": "scanner",
+        "qualifier": "sw-version",
+        "scopeNote": "Software version of the scanner"
+    },
+    {
+        "element": "scanner",
+        "qualifier": "hw-version",
+        "scopeNote": "Hardware version of the scanner"
+    },
+    {
+        "element": "scanner",
+        "qualifier": "fw-version",
+        "scopeNote": "Firmware version of the scanner"
+    },
+    {
+        "element": "resolution",
+        "qualifier": null,
+        "scopeNote": "Scanning resolution in µm/pixel"
+    },
+    {
+        "element": "spectrum",
+        "qualifier": "type",
+        "scopeNote": "Type of scan specturm (RGB, Flourescense....)"
+    },
+    {
+        "element": "spectrum",
+        "qualifier": "color-resolution",
+        "scopeNote": "Bit depth of the spectrum (e.g: 8/10/12/14 Bit)"
+    },
+    {
+        "element": "operation",
+        "qualifier": "mode",
+        "scopeNote": "Scanning mode of the scanner (e.g: Automated, Semi-Automated, Manuel)"
+    },
+    {
+        "element": "operation",
+        "qualifier": "tags",
+        "scopeNote": "Additional informations about the scanning operation condition, coded as JSON-LD"
+    },
+    {
+        "element": "operation",
+        "qualifier": "z-mode",
+        "scopeNote": "e.g: Single Layer, Z-Stacking, Extened Focus....)"
+    },
+    {
+        "element": "compression",
+        "qualifier": "type",
+        "scopeNote": "Compession type of the scan applied during scan processing"
+    },
+    {
+        "element": "compression",
+        "qualifier": "quality",
+        "scopeNote": "Compession quality applied during scan processing"
+    },
+    {
+        "element": "date",
+        "qualifier": null,
+        "scopeNote":  "The date and time (YYYYMMDDThhmm) of the scan"
+    },
+    {
+        "element": "area",
+        "qualifier": "x",
+        "scopeNote": "xxxx according to DICOM ..."
+    },
+    {
+        "element": "area",
+        "qualifier": "y",
+        "scopeNote": "xxxx according to DICOM ..."
+    },
+    {
+        "element": "area",
+        "qualifier": "width",
+        "scopeNote": "xxxx accoring to DICOM ..."
+    },
+    {
+        "element": "area",
+        "qualifier": "height",
+        "scopeNote": "xxxx accoring to DICOM ..."
+    },
+    {
+        "element": "area",
+        "qualifier": "maxwidth",
+        "scopeNote": "dimensions of the harware limits of the scanner in mm"
+    },
+    {
+        "element": "area",
+        "qualifier": "maxheight",
+        "scopeNote": "dimensions of the harware limits of the scanner in mm"
+    },
+    {
+        "element": "area",
+        "qualifier": "bordertop",
+        "scopeNote": "dimensions of the harware limits of the scanner in mm"
+    },
+    {
+        "element": "area",
+        "qualifier": "borderbottom",
+        "scopeNote": "dimensions of the harware limits of the scanner in mm"
+    },
+    {
+        "element": "area",
+        "qualifier": "borderleft",
+        "scopeNote": "dimensions of the harware limits of the scanner in mm"
+    },
+    {
+        "element": "area",
+        "qualifier": "borderright",
+        "scopeNote": "dimensions of the harware limits of the scanner in mm"
+    },
+
+    {
+        "element": "quality",
+        "qualifier": "stitching-error-rate",
+        "scopeNote": "Indicator of stitiching errors, according to ..."
+    },
+    {
+        "element": "quality",
+        "qualifier": "oof-error-rate",
+        "scopeNote": "Indicator of out of focus errors, according to ...."
+    },
+    {
+        "element": "quality",
+        "qualifier": "missing-areas",
+        "scopeNote": "Indicator of tissue areas are missing in the scan, according to ...."
+    },
+    {
+        "element": "quality",
+        "qualifier": "tags",
+        "scopeNote": "Additional informations about the scan quality, coded as JSON-LD"
+    },
+    {
+        "element": "file",
+        "qualifier": null,
+        "scopeNote": "The whole slide image file generated by the scanner"
+    }
+]

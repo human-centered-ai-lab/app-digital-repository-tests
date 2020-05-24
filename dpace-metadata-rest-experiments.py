@@ -1,3 +1,5 @@
+from os import listdir
+from os.path import isfile, join, splitext
 import json, requests
 import string
 
@@ -39,7 +41,7 @@ class MetadataFields:
         for s in schemas:
             if prefix == s['prefix']: 
                 id = s['id']
-        print (id)
+#        print (id)
         return id
 
     def  deleteSchema (self, prefix):
@@ -82,7 +84,21 @@ class MetadataFields:
             if (page  >= totalPages):
                 stillPagesToRead = False
         return metadatafields
+    
+    def createMetadataField (self, prefix, mdf):
+        id = self.schemaID(prefix)
+        status = -1
+        if id > 0:
+            url = self.aep + 'core/metadatafields?schemaId=' + str(id)  
+            r = requests.post(url, headers = h, json = mdf)   
+            status = r.status_code
+        return (status)
 
+    def deleteMetadataField (self, id):
+        url = self.aep + 'core/metadatafields/' + str(id)  
+        r = requests.delete(url, headers = h)   
+        status = r.status_code
+        return (status)
 
     def printMetadataFields (self, prefix, metadatafields):
         i = 1
@@ -116,7 +132,7 @@ class MetadataFields:
             r = requests.get(url, headers = h)
             halrespone = json.loads(r.content)
             totalPages = 1
-            print(json.dumps(halrespone,  indent=4, sort_keys=True))
+            #print(json.dumps(halrespone,  indent=4, sort_keys=True))
             if  '_embedded' in halrespone.keys():
                 totalPages = halrespone ['_embedded']['searchResult']['page']['totalPages']
                 pageNumber = halrespone ['_embedded']['searchResult']['page']['number']
@@ -137,40 +153,83 @@ class MetadataFields:
         print (url, " DELETED ", r.status_code )
 
 
+#865f143a-cb9e-43cb-8a0d-9237df935ce0
 
-r = requests.post('http://dspace-rest.silicolab.bibbox.org/server/api/authn/login?user=v@bibbox.org&password=vendetta') 
+runningEnv = 'localhost'
+
+if runningEnv == 'silicolab':
+    params = {'user':'v@bibbox.org', 'password':'vendetta'}
+    serverurlprefix  = 'http://dspace-rest.silicolab.bibbox.org'
+if runningEnv == 'dspace':
+    params = {'user':'dspacedemo+admin@gmail.com', 'password':'dspace'}
+    serverurlprefix  = 'https://dspace7.4science.cloud'
+if runningEnv == 'localhost':
+    params = {'user':'v@bibbox.org', 'password':'vendetta'}
+    serverurlprefix  = 'http://localhost:8080'
+
+r = requests.post(serverurlprefix + '/server/api/authn/login', params = params) 
 h = {'Authorization':r.headers['Authorization']}
 
-mf =  MetadataFields ('http://dspace-rest.silicolab.bibbox.org/server/api/', h)
-
-#print(json.dumps(schemas, indent=4, sort_keys=True))
+mf =  MetadataFields (serverurlprefix + '/server/api/', h)
 
 #schemas = mf.schemas()
+#print(json.dumps(schemas, indent=4, sort_keys=True))
+
 #for s in schemas:
 #    prefix = s['prefix']
 #    metadatafields = mf.metadataFieldsForSchema(prefix)
 #    print ('=================== ' + prefix + ' ='+ '='*(25-len(prefix)) + ' ' + str(len(metadatafields)))
 #    mf.printMetadataFields (prefix, metadatafields)
 
-
 schema = 'project'
 metadatafields = mf.metadataFieldsForSchema(schema)
-#mf.printMetadataFields (schema, metadatafields)
 print(json.dumps(metadatafields, indent=4, sort_keys=True))
 
-#MUGtestcollection = 'eb6be443-f55e-466c-b2b3-aa6bae97686d'
-#items = mf.itemsInScope(MUGtestcollection)
-#print(json.dumps(items, indent=4, sort_keys=True))
+scanOfSlide = {
+            "element": "isScanOfSlide",
+            "qualifier": None,
+            "scopeNote": "",
+            "type": "metadatafield"
+                }
 
-#for i in items:
-#    mf.deleteItem (i['id'])
+slideOfScan = {
+            "element": "isSlideOfScan",
+            "qualifier": None,
+            "scopeNote": "",
+            "type": "metadatafield"
+                }
 
-r = mf.deleteSchema ('slide')
-r = mf.deleteSchema ('scan')
-r = mf.deleteSchema ('wsi')
-r = mf.createSchema ('slide', "htttp://bbmri-eric.eu/schemas/slide",)
-r = mf.createSchema ('scan', "htttp://bbmri-eric.eu/schemas/scan",)
-r = mf.createSchema ('wsi', "htttp://bbmri-eric.eu/schemas/wsi",)
+status = mf.createMetadataField ("relation", scanOfSlide)
+status = mf.createMetadataField ("relation", slideOfScan)
+
+
+path = 'metadatafields'
+schemafiles = [f for f in listdir(path) if isfile(join(path, f))]
+
+for sf in schemafiles:
+    schema = splitext(sf)[0]
+    filename = join(path, sf)
+    print (schema, filename)
+
+    with open(filename) as f:
+        schemadata = json.load(f)
+
+    print(json.dumps(schemadata, indent=4, sort_keys=True))
+
+    status = mf.createSchema (schema, "htttp://bbmri-eric.eu/schemas/"+schema)
+    print (status)
+
+    metadatafields = mf.metadataFieldsForSchema(schema)
+    print(json.dumps(metadatafields, indent=4, sort_keys=True))
+
+    for mdf in metadatafields:
+        status = mf.deleteMetadataField (mdf['id'])
+
+    for mdf in schemadata:
+        status = mf.createMetadataField (schema, mdf)
+
+    metadatafields = mf.metadataFieldsForSchema(schema)
+    print(json.dumps(metadatafields, indent=4, sort_keys=True))
 
 
 
