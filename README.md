@@ -2,6 +2,14 @@
 
 Collection of python script to test and evaluate tools to build TDR, Trusted Digital Repositories
 
+
+## generate a local environment and install packages
+
+* `python3 -m venv localenv`
+* `source localenv/bin/activate`
+* `pip install -r requirements.txt`
+* `pip freeze > requirements.txt`
+
 ## Dspace 7 Test environment
 
 ### setup of dspace with docker on silicolab server
@@ -33,10 +41,11 @@ Collection of python script to test and evaluate tools to build TDR, Trusted Dig
 
 * how to access the demo
 
-    * http://dspace.silicolab.bibbox.org/home
-    * http://dspace-rest.silicolab.bibbox.org/server/#/server/api
+    * http://gui.dspace.bibbox.org/
+    * http://rest.dspace.bibbox.org/server/#/server/api
     *   user: v
     *   password: vendetta
+    * http://adminer.dspace.bibbox.org/server/#/server/api
 
 ## Usefull Links
 
