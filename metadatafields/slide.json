@@ -112,13 +112,7 @@
     },
     {
         "element": "previewimage",
-        "qualifier": "pre",
+        "qualifier": null,
         "scopeNote": "Preview image before cleaning and processing"
-    },
-    {
-        "element": "previewimage",
-        "qualifier": "original",
-        "scopeNote": "Preview image after cleaning before scanning"
     }
-
 ]

@@ -150,7 +150,6 @@
         "qualifier": "borderright",
         "scopeNote": "dimensions of the harware limits of the scanner in mm"
     },
-
     {
         "element": "quality",
         "qualifier": "stitching-error-rate",
@@ -160,6 +159,21 @@
         "element": "quality",
         "qualifier": "oof-error-rate",
         "scopeNote": "Indicator of out of focus errors, according to ...."
+    },
+    {
+        "element": "tissue-parts",
+        "qualifier": null,
+        "scopeNote": "Number of tissue parts on scan"
+    },
+    {
+        "element": "tissue-mask",
+        "qualifier": null,
+        "scopeNote": "Mask for background removal/Tissue segmentation"
+    },
+    {
+        "element": "quality",
+        "qualifier": "missing-areas",
+        "scopeNote": "Indicator of tissue areas are missing in the scan, according to ...."
     },
     {
         "element": "quality",
