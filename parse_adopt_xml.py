@@ -24,7 +24,6 @@ class Parse_file:
             print(child)
 
     def parse_csv(self):
-
         # with open(self.csv_file, "r") as fp:
         #     for i, line in enumerate(fp.readlines()):
         #         print(line.strip("\n").split(";"))
@@ -32,15 +31,15 @@ class Parse_file:
 
         pandas_csv = pandas.read_csv(self.csv_file, sep=";")
         print(pandas_csv)
-
-        for item in pandas_csv.items():
-            print(item)
-            #input()
+        return pandas_csv
+        # for item in pandas_csv.items():
+        #     print(item)
+        #     #input()
 
 
 class MetadataFields:
     '''
-    Object handling Metadata creation slots and
+    Object handling Metadata scheme and field creation creation and
     '''
 
     def __init__(self, api_entry_point, header):
@@ -237,12 +236,20 @@ class Items:
                     stillPagesToRead = False
         return items
 
+    def get_item(self, item_uuid):
+        url = self.aep + "core/items/" + item_uuid
+        r = requests.get(url, headers=h)
+        status = r.status_code
+        createresponse = json.loads(r.content)
+        print(json.dumps(createresponse, indent=4, sort_keys=True))
+        return status, createresponse['id']
+
     def createItem(self, collection_uiid, item):
         url = self.aep + 'core/items?owningCollection=' + collection_uiid
         r = requests.post(url, headers=h, json=item)
         status = r.status_code
         createresponse = json.loads(r.content)
-        print(json.dumps(createrespone, indent=4, sort_keys=True))
+        print(json.dumps(createresponse, indent=4, sort_keys=True))
         return status, createresponse['id']
 
     def deleteItem(self, item_uiid):
@@ -250,18 +257,41 @@ class Items:
         r = requests.delete(url, headers=h)
         print(url, " DELETED ", r.status_code)
 
+    def get_item_bundles(self, items):
+
+        for item in items:
+            pass
+
+    def get_item_bitsreams(self, items):
+
+        for item in items:
+            pass
+
     def createBundle(self, item_uiid, bundle):
-        url = self.aep + 'api/core/items/' + item_uiid + '/bundles'
+        url = self.aep + 'core/items/' + item_uiid + '/bundles'
         r = requests.post(url, headers=h, json=bundle)
         status = r.status_code
         createresponse = json.loads(r.content)
-        print(json.dumps(createrespone, indent=4, sort_keys=True))
+        print(json.dumps(createresponse, indent=4, sort_keys=True))
         return status, createresponse['id']
 
-    def deleteBundle(self, item_uiid):
-        url = self.aep + 'core/items/' + item_uiid
+    def deleteBundle(self, bundle_uiids):
+        url = self.aep + 'core/bundles/' + bundle_uiid
         r = requests.delete(url, headers=h)
         print(url, " DELETED ", r.status_code)
+
+    def createBitstream(self, item_uiid, bitstream):
+        url = self.aep + 'core/items/' + item_uiid + '/bundles'
+        h_alt = h.copy()
+        h_alt.update({ 'Content-Type': 'multipart/form-data'})
+        r = requests.post(url, headers=h_alt, json=bitstream)
+        status = r.status_code
+        createresponse = json.loads(r.content)
+        print(json.dumps(createresponse, indent=4, sort_keys=True))
+        return status, createresponse['id']
+
+    def deleteBitsream(self, uuid):
+        pass
 
     def metadataarray(self, values):
         ma = []
@@ -275,8 +305,17 @@ class Items:
             ma.append({"value": v, "authority": None, "confidence": -1})
         return ma
 
-    def dummySlide(self):
-        slideUUID = slideuuid = str(uuid.uuid4())
+    def merge_values(self, val1, val2):
+        if val1 is None:
+            return self.metadataarrayneutral([val2])
+        elif val2 is None:
+            return val1
+        else:
+            return self.metadataarrayneutral([val2])
+
+    def dummySlide(self, add_metadata_dict, slideUUID):
+
+        #System metadata slide
         slidemetadata = {
             "dc.contributor.author": self.metadataarrayneutral(["Plass, Markus", "Müller, Heimo"]),
             "dc.title": self.metadataarray([slideUUID]),
@@ -284,9 +323,13 @@ class Items:
             "slide.identifier.uuidslide": self.metadataarrayneutral([slideUUID]),
             "slide.dimension.width": self.metadataarrayneutral(["25"]),
             "slide.dimension.height": self.metadataarrayneutral(["75"]),
-            "dc.type": self.metadataarrayneutral(["slide"]),
-            "relationship.type": self.metadataarrayneutral(["Slide"])
+            "dc.type": self.metadataarrayneutral(["Slide"]),
+            "relationship.type": self.metadataarrayneutral(["Slide"]),
+            "relation.isScanOfSlide": self.metadataarrayneutral(["test"])
         }
+        # add additional data fields
+        slidemetadata = {field: self.merge_values(slidemetadata.get(field), add_metadata_dict.get(field))
+        for field in set(slidemetadata).union(add_metadata_dict)}
 
         slide = {
             "name": slideUUID,
@@ -297,10 +340,12 @@ class Items:
             "metadata": slidemetadata
         }
 
-        return slide
 
-    def dummyScan(self, slideid):
-        scanUUID = slideuuid = str(uuid.uuid4())
+        return slide,
+
+    def dummyScan(self, slideid, add_metadata_dict, scanUUID):
+        # str(uuid.uuid4())
+        #System metadata Scan
         scanmetadata = {
             "dc.contributor.author": self.metadataarrayneutral(["Plass, Markus", "Müller, Heimo"]),
             "dc.title": self.metadataarrayneutral([scanUUID]),
@@ -308,12 +353,15 @@ class Items:
             "scan.scanner.manufacturer": self.metadataarrayneutral(["3D Histech"]),
             "scan.scanner.serial-number": self.metadataarrayneutral(["2991-99201-9919919"]),
             "scan.operator": self.metadataarrayneutral(["Plass, Markus"]),
-            "dc.type": self.metadataarrayneutral(["scan"]),
+            "dc.type": self.metadataarrayneutral(["Scan"]),
             "relationship.type": self.metadataarrayneutral(["Scan"]),
-            "relation.isScanOfSlide": self.metadataarray([slideid])
+            "relation.isScanOfSlide": self.metadataarrayneutral([slideid])
         }
 
-
+        scanmetadata = {field: self.merge_values(scanmetadata.get(field), add_metadata_dict.get(field))
+                         for field in set(scanmetadata).union(add_metadata_dict)}
+        # Todo fix this
+        scanmetadata["relation.isScanOfSlide"] = self.metadataarrayneutral([slideid])
 
         scan = {
             "name": scanUUID,
@@ -326,25 +374,60 @@ class Items:
 
         return scan
 
-    def dummy_wsi(self, wsi_id):
-        pass
+    def dummyWSI(self, add_metadata_dict,  wsiUUID):
 
+        wsimetadata = {
+            "dc.contributor.author": self.metadataarrayneutral(["Plass, Markus", "Müller, Heimo"]),
+            "dc.title": self.metadataarrayneutral([wsiUUID]),
+            "dc.type": self.metadataarrayneutral(["WSI"]),
+            "relationship.type": self.metadataarrayneutral(["WSI"]),
+            "relation.isWSIOfScan": self.metadataarrayneutral([slideid])
+        }
+
+        wsimetadata = {field: self.merge_values(wsimetadata.get(field), add_metadata_dict.get(field))
+                        for field in set(wsimetadata).union(add_metadata_dict)}
+
+        wsi = {
+            "name": wsiUUID,
+            "inArchive": True,
+            "discoverable": True,
+            "withdrawn": False,
+            "type": "Scan",
+            "metadata": wsimetadata
+        }
+
+        return wsi
 
     def dummyBundle(self):
 
         bundle = {
-            "name": "ORIGINAL",
+            "name": "Slide_files",
             "metadata": {}
         }
+        return bundle
 
+    def dummyBitsteam(self, filepath):
+
+        bitstream_metadata = {
+            "dc.description": [
+            {
+                "value": "example file",
+                "language": None,
+                "authority": None,
+                "confidence": -1,
+                "place": 0}]
+            }
+
+        bitstream = {
+            'file': (filepath, open(filepath, 'rb')),
+            'properties': (None,
+                           {"name": "test_json",
+                            "metadata": bitstream_metadata}),
+        }
+
+        return bitstream
 
 if __name__ == "__main__":
-
-    # parser = Parse_file("/home/simon/Documents/Arbeit_med_Uni/app-digital-repository-tests/ADOPT-Graz.xml",
-    #                     "/home/simon/Documents/Arbeit_med_Uni/app-digital-repository-tests/CSV_Scanns.csv")
-    #
-    # parser.parse_xml()
-    # parser.parse_csv()
 
     runningEnv = 'silicolab'
 
@@ -360,9 +443,41 @@ if __name__ == "__main__":
 
     r = requests.post(serverurlprefix + '/server/api/authn/login', params=params)
     h = {'Authorization': r.headers['Authorization']}
-
+    test_item_id = "44c29473-5de2-48fa-b005-e5029aa1a50b"
 
     mf = MetadataFields(serverurlprefix + '/server/api/', h)
+    items = Items(serverurlprefix + '/server/api/', h)
+
+
+    # #test item browsing
+    # coll_test = "b7bf809e-b8ea-41bf-b16a-38d78785f557"
+    # founditems = items.itemsInScope(coll_test)
+    # testitem = items.get_item("07c6249f-4bf7-494d-9ce3-6ffdb2aed538")
+    # print(json.dumps(testitem, indent=4, sort_keys=True))
+    # for item in founditems:
+    #     print(json.dumps(item, indent=4, sort_keys=True))
+    #     print(item["id"])
+    #     input()
+    #     #status, bundleid = items.createBundle(item["id"], items.dummyBundle)
+    #
+    # #test bundle delete
+    # items.deleteBundle("e15d8c09-0c47-4490-ad44-ec9c88bc6e6f")
+    # input()
+    #
+    # #test bundle creation
+    # status, bundle_id = items.createBundle("e15d8c09-0c47-4490-ad44-ec9c88bc6e6f", items.dummyBundle())
+    # print(status)
+    # print(bundle_id)
+    # input()
+    #
+    # #test collection owner
+    # collection_uuid = MUGtestcollection
+    # url = self.aep + "/api/core/communities/" + collection_uuid + "/adminGroup"
+    # r = requests.get(url, headers=h)
+    # status = r.status_code
+    # createresponse = json.loads(r.content)
+    # print(json.dumps(createresponse, indent=4, sort_keys=True))
+    # input()
 
     schemas = mf.schemas()
     print(json.dumps(schemas, indent=4, sort_keys=True))
@@ -375,6 +490,9 @@ if __name__ == "__main__":
     #    metadatafields = mf.metadataFieldsForSchema(prefix)
     #    print ('=================== ' + prefix + ' ='+ '='*(25-len(prefix)) + ' ' + str(len(metadatafields)))
     #    mf.printMetadataFields (prefix, metadatafields)
+
+    # parsing done locally from txt files copied from Wiki not neccesary once
+
     save = False
     schemes = ["slide", "scan", "wsi"]
     field_keys = ["id", "element", "qualifier", "scopeNote", "type"]
@@ -382,15 +500,20 @@ if __name__ == "__main__":
 
     standart_values = ["80%", "jpg", "scanable", "cleaned", "Semi-Automated", "Layer", "Fakelman", "Colon", "8", "RGB", "P1000", "DS", "FFPE",
                        "ADOPT", "True", "MRXS", "Human", "Operational"]
-    replace_csv = [["NA1",  "slide.caseUUID", "NA3", "slide.identifier.uuidslide", "NA4",
-                   ['slide.label.normalized', 'slide.label.transcribed', 'slide.identifier.label'], "NA2", "slide.staining",
+
+    replace_csv = [["NA1", "slide.caseUUID", "NA3", "slide.identifier.uuidslide", "NA4",
+                    'slide.identifier.label', "NA2", "slide.staining",
                     "NA5", "NA6"],
-                   ["relation.isScanOfSlide", "scan.file", "scan.identifier"],
-                   ["wsi.identifier"]]
+                   ["NA1", "NA2", "NA3", "relation.isScanOfSlide", "scan.identifier", "NA4", "scan.file", "NA5", "NA6",
+                    "NA7"],
+                   ["NA1", "NA2", "NA3", "NA4", "NA5", "NA6", "NA7", "NA8", "wsi.identifier", "NA9"]]
+
+    same_val_fields = ['slide.label.normalized', 'slide.label.transcribed', 'slide.identifier.label']
 
     scan_additional_fields = []
     phil_insert_keys = []
     metadata_dicts = [{}, {}, {}]
+    IDCsvToDSpace = [{}, {}, {}]
     for n, schema in enumerate(schemes):
         dict_curr = metadata_dicts[n]
         with open(schema +".txt", "r") as fp:
@@ -400,6 +523,7 @@ if __name__ == "__main__":
                 print(line.strip("\n").split(" ")[-1])
                 if line.strip("\n").split(" ")[0] in replace_csv[n]:
                     pass
+                    # check whats happening here: answer is nothing
                 elif line.strip("\n").split(" ")[-1] in standart_values:
                     print(line.strip("\n").split(" ")[0])
                     print(line.strip("\n").split(" ")[-1])
@@ -409,13 +533,13 @@ if __name__ == "__main__":
                         dict_curr.update({line.strip("\n").split(" ")[0]: insert_val})
                     else:
                         dict_curr.update({line.strip("\n").split(" ")[0]:line.strip("\n").split(" ")[-1]})
-
+                # because values are added here anyways
                 elif not line.strip("\n").split(" ")[-1].lower() == "leer":
                     phil_insert_keys.append(line.strip("\n").split(" ")[0])
 
         print(phil_insert_keys)
         print(dict_curr)
-        input()
+        #input()
         metadatafields = mf.metadataFieldsForSchema(schema)
         print(json.dumps(metadatafields, indent=4, sort_keys=True))
         for field in metadatafields:
@@ -432,26 +556,76 @@ if __name__ == "__main__":
         print(json.dumps(dict_curr, indent=4, sort_keys=True))
         print(len(dict_curr))
         print(len(metadatafields))
-        input()
+        #input()
         if save:
             with open(schema + "metadata_dict.json", "w") as fp:
                 json.dump(dict_curr, fp)
-    for item in metadata_dicts:
+    # Start Upload
+
+    founditems = items.itemsInScope(MUGtestcollection)
+    for i in founditems:
+        items.deleteItem(i['id'])
+
+    for n, metadatadict in enumerate(metadata_dicts):
         parser = Parse_file("/home/simon/Documents/Arbeit_med_Uni/app-digital-repository-tests/ADOPT-Graz.xml",
                             "/home/simon/Documents/Arbeit_med_Uni/app-digital-repository-tests/CSV_Scanns.csv",
-                            item)
+                            metadatadict)
 
-        parser.parse_csv()
+        fill_fields = []
+        fill_values = []
+        pandas_csv = parser.parse_csv()
+        print(replace_csv[n])
+        pandas_csv.columns = replace_csv[n]
 
+        for current_key in replace_csv[n]:
+            if not "NA" in current_key:
+               fill_fields.append(current_key)
 
-    with open("scanmetadata_dict.json", "r") as fp:
-        scanmeta_dict = json.load(fp)
+        # fill Scan Data CSV values
+        # Todo add Database CSV values
+        print(pandas_csv.shape[0])
+        for i in range(pandas_csv.shape[0]):
+            if i == 1:
+                break
+            for field in fill_fields:
+                print(fill_fields)
+                if field in same_val_fields:
+                    for same_val in same_val_fields:
+                        metadatadict[same_val] = pandas_csv[field][i]
+                else:
+                    metadatadict[field] = pandas_csv[field][i]
+            # add slide to Dspace
+            if n == 0:
+                UUIDslide = metadatadict["slide.identifier.uuidslide"]
+                print(json.dumps(metadatadict, indent=4, sort_keys=True))
+                slide = items.dummySlide(metadatadict, UUIDslide)
+                # Todo add API calls for bundle and Bitsream meanwhile print the slide###
+                print(json.dumps(slide[0], indent=4, sort_keys=True))
+                status, slideid = items.createItem(MUGtestcollection, slide[0])
+                input()
+                IDCsvToDSpace[n].update({i: {UUIDslide: slideid}})
+            #add scan to Dspace
+            if n == 1:
+                for key in IDCsvToDSpace[n-1][i].keys():
+                    slideid = IDCsvToDSpace[n-1][i][key]
+                print(json.dumps(metadatadict, indent=4, sort_keys=True))
+                scanUUID = metadatadict["scan.identifier"]
+                print(slideid)
+                scan = items.dummyScan(slideid, metadatadict, scanUUID)
+                print(json.dumps(scan, indent=4, sort_keys=True))
+                # Todo add API calls for adding relation to Slide meanwhile print the scan###
+                status, scanid = items.createItem(MUGtestcollection, scan)
+                IDCsvToDSpace[n].update({scanUUID: scanid})
 
-    for item in scanmeta_dict.keys():
-        print("{}:{}".format(item, scanmeta_dict[item]))
+            #add wsi to dspace
+            if n == 2:
+                wsiUUID = metadatadict["wsi.identifier"]
+                print(json.dumps(metadatadict, indent=4, sort_keys=True))
+                wsi = items.dummyWSI(metadatadict, wsiUUID)
+                # Todo add API calls for adding item, bundle and Bitsream meanwhile print the wsi###
+                print(json.dumps(wsi, indent=4, sort_keys=True))
+        input()
 
-    test = json.load()
-    items = Items(serverurlprefix + '/server/api/', h)
 
     headers = {
         'Content-Type': 'multipart/form-data',
@@ -461,7 +635,8 @@ if __name__ == "__main__":
     files = {
         'file': ('Downloads/test.html', open('Downloads/test.html', 'rb')),
         'properties': (None,
-                       '{ "name": "test.html", "metadata": { "dc.description": [ { "value": "example file", "language": null, "authority": null, "confidence": -1, "place": 0 } ]}, "bundleName": "ORIGINAL" };type'),
+                       '{ "name": "test.html", "metadata": { "dc.description": [ { "value": "example file", "language": '
+                       'null, "authority": null, "confidence": -1, "place": 0 } ]}, "bundleName": "ORIGINAL" };type'),
     }
 
     response = requests.post(
