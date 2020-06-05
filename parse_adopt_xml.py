@@ -136,13 +136,13 @@ class MetadataFields:
             url = self.aep + 'core/metadatafields?schemaId=' + str(id)
             r = requests.post(url, headers=h, json=mdf)
             status = r.status_code
-        return (status)
+        return status
 
     def deleteMetadataField(self, id):
         url = self.aep + 'core/metadatafields/' + str(id)
         r = requests.delete(url, headers=h)
         status = r.status_code
-        return (status)
+        return status
 
     def printMetadataFields(self, prefix, metadatafields):
         i = 1
@@ -219,6 +219,7 @@ class Items:
         page = 0
         while stillPagesToRead:
             url = self.aep + 'discover/search/objects?scope=' + scope + '&page=' + str(page)
+            print(url)
             r = requests.get(url, headers=h)
             halrespone = json.loads(r.content)
             totalPages = 1
@@ -258,13 +259,9 @@ class Items:
         print(url, " DELETED ", r.status_code)
 
     def get_item_bundles(self, items):
-
-        for item in items:
             pass
 
     def get_item_bitsreams(self, items):
-
-        for item in items:
             pass
 
     def createBundle(self, item_uiid, bundle):
@@ -273,19 +270,20 @@ class Items:
         status = r.status_code
         createresponse = json.loads(r.content)
         print(json.dumps(createresponse, indent=4, sort_keys=True))
-        return status, createresponse['id']
+        return status, createresponse['uuid']
 
     def deleteBundle(self, bundle_uiids):
         url = self.aep + 'core/bundles/' + bundle_uiid
         r = requests.delete(url, headers=h)
         print(url, " DELETED ", r.status_code)
 
-    def createBitstream(self, item_uiid, bitstream):
-        url = self.aep + 'core/items/' + item_uiid + '/bundles'
-        h_alt = h.copy()
-        h_alt.update({ 'Content-Type': 'multipart/form-data'})
-        r = requests.post(url, headers=h_alt, json=bitstream)
+    def createBitstream(self, bundle_uuid, files, bitstream):
+        print(bitstream)
+        url = self.aep + 'core//bundles/' + bundle_uuid + '/bitstreams'
+        # if u use files in python requests it automatically sets Content-Type:multipart/form
+        r = requests.post(url, headers=h, files=files, json=bitstream)
         status = r.status_code
+        print(status)
         createresponse = json.loads(r.content)
         print(json.dumps(createresponse, indent=4, sort_keys=True))
         return status, createresponse['id']
@@ -392,16 +390,16 @@ class Items:
             "inArchive": True,
             "discoverable": True,
             "withdrawn": False,
-            "type": "Scan",
+            "type": "WSI",
             "metadata": wsimetadata
         }
 
         return wsi
 
-    def dummyBundle(self):
+    def dummyBundle(self, bundle_name):
 
         bundle = {
-            "name": "Slide_files",
+            "name": bundle_name,
             "metadata": {}
         }
         return bundle
@@ -409,23 +407,27 @@ class Items:
     def dummyBitsteam(self, filepath):
 
         bitstream_metadata = {
+            "dc.title": self.metadataarray([filepath.split("/")[-1]]),
             "dc.description": [
             {
                 "value": "example file",
                 "language": None,
                 "authority": None,
                 "confidence": -1,
-                "place": 0}]
-            }
-
-        bitstream = {
-            'file': (filepath, open(filepath, 'rb')),
-            'properties': (None,
-                           {"name": "test_json",
-                            "metadata": bitstream_metadata}),
+            }]
         }
 
-        return bitstream
+        bitstream = {
+                "name": "test_file",
+                "metadata": bitstream_metadata
+        }
+
+        files = {
+            'file': (filepath.split("/")[-1],
+                     open('/home/simon/Downloads/PA-H1990019917-00-08_preview_barcode.jpg', 'rb'))
+        }
+
+        return (files, bitstream)
 
 if __name__ == "__main__":
 
@@ -448,28 +450,52 @@ if __name__ == "__main__":
     mf = MetadataFields(serverurlprefix + '/server/api/', h)
     items = Items(serverurlprefix + '/server/api/', h)
 
+    print(h)
+    input()
+    #test item browsing
+    coll_test = "b7bf809e-b8ea-41bf-b16a-38d78785f557"
+    founditems = items.itemsInScope(MUGtestcollection)
 
-    # #test item browsing
-    # coll_test = "b7bf809e-b8ea-41bf-b16a-38d78785f557"
-    # founditems = items.itemsInScope(coll_test)
-    # testitem = items.get_item("07c6249f-4bf7-494d-9ce3-6ffdb2aed538")
-    # print(json.dumps(testitem, indent=4, sort_keys=True))
     # for item in founditems:
     #     print(json.dumps(item, indent=4, sort_keys=True))
-    #     print(item["id"])
-    #     input()
-    #     #status, bundleid = items.createBundle(item["id"], items.dummyBundle)
+    #     if "SLIDE" in item["name"]:
+    #         print(item["id"])
+    #         print(item["name"])
+    #         input()
     #
+    #         headers = h.copy()
+    #         headers.update({'Content-Type': 'multipart/form-data'})
+    #         print(headers)
+    #
+    #         #createresponse = json.loads(re.content)
+    #         files = {
+    #             'file': ('/home/simon/Downloads/PA-H1990019917-00-08_preview_barcode.jpg',
+    #                      open('/home/simon/Downloads/PA-H1990019917-00-08_preview_barcode.jpg', 'rb'))
+    #         }
+    #
+    #         re = requests.post(
+    #             'http://dspace-rest.silicolab.bibbox.org/server/api/core/bundles/6912f20e-853d-4c23-9aee-d72489806245/bitstreams',
+    #             headers=h, files=files)
+    #         # re = requests.post(
+    #         #     'http://dspace-rest.silicolab.bibbox.org/server/api/core/items/' + item["id"] + '/bundles/bitstreams',
+    #         #     headers=headers, data=properties, files=files)
+    #         status = re.status_code
+    #         print(re.content)
+    #         # createresponse = json.loads(re.content)
+    #         # print(json.dumps(createresponse, indent=4, sort_keys=True))
+    #         print(status)
+    #         input()
+
     # #test bundle delete
     # items.deleteBundle("e15d8c09-0c47-4490-ad44-ec9c88bc6e6f")
     # input()
-    #
+
     # #test bundle creation
     # status, bundle_id = items.createBundle("e15d8c09-0c47-4490-ad44-ec9c88bc6e6f", items.dummyBundle())
     # print(status)
     # print(bundle_id)
     # input()
-    #
+
     # #test collection owner
     # collection_uuid = MUGtestcollection
     # url = self.aep + "/api/core/communities/" + collection_uuid + "/adminGroup"
@@ -479,10 +505,23 @@ if __name__ == "__main__":
     # print(json.dumps(createresponse, indent=4, sort_keys=True))
     # input()
 
-    schemas = mf.schemas()
-    print(json.dumps(schemas, indent=4, sort_keys=True))
-    print(h)
-    input()
+    # # test get Bitsstream
+    # r = requests.get("http://dspace-rest.silicolab.bibbox.org/server/api/core/bitstreams/4e5037e3-eb1d-4b13-9f4a-e1de9f18d259", headers=h)
+    # status = r.status_code
+    # createresponse = json.loads(r.content)
+    # print(json.dumps(createresponse, indent=4, sort_keys=True))
+    # input()
+
+    # test create Bitstream
+    # items.createBitstream("c20da5cd-1cb4-483f-8430-4bee7f064e33",  items.dummyBitsteam("/home/simon/Documents/Arbeit_med_Uni/app-digital-repository-tests/metadatafields/slide.json"))
+    # status = r.status_code
+    # createresponse = json.loads(r.content)
+    # print(json.dumps(createresponse, indent=4, sort_keys=True))
+    # input()
+
+    # schemas = mf.schemas()
+    # print(json.dumps(schemas, indent=4, sort_keys=True))
+
 
 
     # for s in schemas:
@@ -491,7 +530,7 @@ if __name__ == "__main__":
     #    print ('=================== ' + prefix + ' ='+ '='*(25-len(prefix)) + ' ' + str(len(metadatafields)))
     #    mf.printMetadataFields (prefix, metadatafields)
 
-    # parsing done locally from txt files copied from Wiki not neccesary once
+    # parsing done locally from txt files copied from Wiki not neccesary once the fields are clear
 
     save = False
     schemes = ["slide", "scan", "wsi"]
@@ -509,6 +548,7 @@ if __name__ == "__main__":
                    ["NA1", "NA2", "NA3", "NA4", "NA5", "NA6", "NA7", "NA8", "wsi.identifier", "NA9"]]
 
     same_val_fields = ['slide.label.normalized', 'slide.label.transcribed', 'slide.identifier.label']
+    bundle_names = ["ORIGINAL", "THUMBNAIL"]
 
     scan_additional_fields = []
     phil_insert_keys = []
@@ -560,6 +600,7 @@ if __name__ == "__main__":
         if save:
             with open(schema + "metadata_dict.json", "w") as fp:
                 json.dump(dict_curr, fp)
+
     # Start Upload
 
     founditems = items.itemsInScope(MUGtestcollection)
@@ -572,7 +613,6 @@ if __name__ == "__main__":
                             metadatadict)
 
         fill_fields = []
-        fill_values = []
         pandas_csv = parser.parse_csv()
         print(replace_csv[n])
         pandas_csv.columns = replace_csv[n]
@@ -602,6 +642,11 @@ if __name__ == "__main__":
                 # Todo add API calls for bundle and Bitsream meanwhile print the slide###
                 print(json.dumps(slide[0], indent=4, sort_keys=True))
                 status, slideid = items.createItem(MUGtestcollection, slide[0])
+                for bundle in bundle_names:
+                    status, bundle_id = items.createBundle(slideid, items.dummyBundle(bundle))
+                    files, bitstream = items.dummyBitsteam("/home/simon/Downloads/PA-H1990019917-00-08_preview_barcode.jpg")
+                    status, bitstream_id = items.createBitstream(bundle_id, files, bitstream)
+
                 input()
                 IDCsvToDSpace[n].update({i: {UUIDslide: slideid}})
             #add scan to Dspace
@@ -616,7 +661,6 @@ if __name__ == "__main__":
                 # Todo add API calls for adding relation to Slide meanwhile print the scan###
                 status, scanid = items.createItem(MUGtestcollection, scan)
                 IDCsvToDSpace[n].update({scanUUID: scanid})
-
             #add wsi to dspace
             if n == 2:
                 wsiUUID = metadatadict["wsi.identifier"]
@@ -627,18 +671,3 @@ if __name__ == "__main__":
         input()
 
 
-    headers = {
-        'Content-Type': 'multipart/form-data',
-        'Authorization': 'Bearer eyJhbGciOiJI...',
-    }
-
-    files = {
-        'file': ('Downloads/test.html', open('Downloads/test.html', 'rb')),
-        'properties': (None,
-                       '{ "name": "test.html", "metadata": { "dc.description": [ { "value": "example file", "language": '
-                       'null, "authority": null, "confidence": -1, "place": 0 } ]}, "bundleName": "ORIGINAL" };type'),
-    }
-
-    response = requests.post(
-        'https://dspace7.4science.cloud/dspace-spring-rest/api/core/bundles/d3599177-0408-403b-9f8d-d300edd79edb/bitstreams',
-        headers=headers, files=files)
