@@ -315,15 +315,17 @@ class Items:
 
         #System metadata slide
         slidemetadata = {
-            "dc.contributor.author": self.metadataarrayneutral(["Plass, Markus", "Müller, Heimo"]),
+            #"dc.contributor.author": self.metadataarrayneutral(["Plass, Markus", "Müller, Heimo"]),
             "dc.title": self.metadataarray([slideUUID]),
             "slide.identifier.label": self.metadataarrayneutral(["histoNR"]),
             "slide.identifier.uuidslide": self.metadataarrayneutral([slideUUID]),
             "slide.dimension.width": self.metadataarrayneutral(["25"]),
             "slide.dimension.height": self.metadataarrayneutral(["75"]),
             "dc.type": self.metadataarrayneutral(["Slide"]),
-            "relationship.type": self.metadataarrayneutral(["Slide"]),
-            "relation.isScanOfSlide": self.metadataarrayneutral(["test"])
+            "journal.title": self.metadataarrayneutral([slideUUID]),
+            "relationship.type": self.metadataarrayneutral(["Journal"]),
+            #"relation.isScanOfSlide": self.metadataarrayneutral(["test"])
+
         }
         # add additional data fields
         slidemetadata = {field: self.merge_values(slidemetadata.get(field), add_metadata_dict.get(field))
@@ -352,8 +354,9 @@ class Items:
             "scan.scanner.serial-number": self.metadataarrayneutral(["2991-99201-9919919"]),
             "scan.operator": self.metadataarrayneutral(["Plass, Markus"]),
             "dc.type": self.metadataarrayneutral(["Scan"]),
-            "relationship.type": self.metadataarrayneutral(["Scan"]),
-            "relation.isScanOfSlide": self.metadataarrayneutral([slideid])
+            "relationship.type": self.metadataarrayneutral(["Publication"]),
+            #"relation.isScanOfSlide": self.metadataarrayneutral([slideid]),
+            "relation.isJournalOfPublication": self.metadataarrayneutral([slideid])
         }
 
         scanmetadata = {field: self.merge_values(scanmetadata.get(field), add_metadata_dict.get(field))
@@ -455,82 +458,6 @@ if __name__ == "__main__":
     #test item browsing
     coll_test = "b7bf809e-b8ea-41bf-b16a-38d78785f557"
     founditems = items.itemsInScope(MUGtestcollection)
-
-    # for item in founditems:
-    #     print(json.dumps(item, indent=4, sort_keys=True))
-    #     if "SLIDE" in item["name"]:
-    #         print(item["id"])
-    #         print(item["name"])
-    #         input()
-    #
-    #         headers = h.copy()
-    #         headers.update({'Content-Type': 'multipart/form-data'})
-    #         print(headers)
-    #
-    #         #createresponse = json.loads(re.content)
-    #         files = {
-    #             'file': ('/home/simon/Downloads/PA-H1990019917-00-08_preview_barcode.jpg',
-    #                      open('/home/simon/Downloads/PA-H1990019917-00-08_preview_barcode.jpg', 'rb'))
-    #         }
-    #
-    #         re = requests.post(
-    #             'http://dspace-rest.silicolab.bibbox.org/server/api/core/bundles/6912f20e-853d-4c23-9aee-d72489806245/bitstreams',
-    #             headers=h, files=files)
-    #         # re = requests.post(
-    #         #     'http://dspace-rest.silicolab.bibbox.org/server/api/core/items/' + item["id"] + '/bundles/bitstreams',
-    #         #     headers=headers, data=properties, files=files)
-    #         status = re.status_code
-    #         print(re.content)
-    #         # createresponse = json.loads(re.content)
-    #         # print(json.dumps(createresponse, indent=4, sort_keys=True))
-    #         print(status)
-    #         input()
-
-    # #test bundle delete
-    # items.deleteBundle("e15d8c09-0c47-4490-ad44-ec9c88bc6e6f")
-    # input()
-
-    # #test bundle creation
-    # status, bundle_id = items.createBundle("e15d8c09-0c47-4490-ad44-ec9c88bc6e6f", items.dummyBundle())
-    # print(status)
-    # print(bundle_id)
-    # input()
-
-    # #test collection owner
-    # collection_uuid = MUGtestcollection
-    # url = self.aep + "/api/core/communities/" + collection_uuid + "/adminGroup"
-    # r = requests.get(url, headers=h)
-    # status = r.status_code
-    # createresponse = json.loads(r.content)
-    # print(json.dumps(createresponse, indent=4, sort_keys=True))
-    # input()
-
-    # # test get Bitsstream
-    # r = requests.get("http://dspace-rest.silicolab.bibbox.org/server/api/core/bitstreams/4e5037e3-eb1d-4b13-9f4a-e1de9f18d259", headers=h)
-    # status = r.status_code
-    # createresponse = json.loads(r.content)
-    # print(json.dumps(createresponse, indent=4, sort_keys=True))
-    # input()
-
-    # test create Bitstream
-    # items.createBitstream("c20da5cd-1cb4-483f-8430-4bee7f064e33",  items.dummyBitsteam("/home/simon/Documents/Arbeit_med_Uni/app-digital-repository-tests/metadatafields/slide.json"))
-    # status = r.status_code
-    # createresponse = json.loads(r.content)
-    # print(json.dumps(createresponse, indent=4, sort_keys=True))
-    # input()
-
-    # schemas = mf.schemas()
-    # print(json.dumps(schemas, indent=4, sort_keys=True))
-
-
-
-    # for s in schemas:
-    #    prefix = s['prefix']
-    #    metadatafields = mf.metadataFieldsForSchema(prefix)
-    #    print ('=================== ' + prefix + ' ='+ '='*(25-len(prefix)) + ' ' + str(len(metadatafields)))
-    #    mf.printMetadataFields (prefix, metadatafields)
-
-    # parsing done locally from txt files copied from Wiki not neccesary once the fields are clear
 
     save = False
     schemes = ["slide", "scan", "wsi"]
