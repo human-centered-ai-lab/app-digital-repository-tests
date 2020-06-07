@@ -18,7 +18,7 @@ Collection of python script to test and evaluate tools to build TDR, Trusted Dig
 
 
 * install steps
-    * `git clone https://github.com/DSpace/dspace-angular`
+    * `git clone https://github.com/human-centered-ai-lab/dspace-angular`
     * `cd dspace-angular`
     * `docker-compose -f docker/docker-compose.yml pull`
     * `docker-compose -p d7 -f docker/docker-compose.yml -f docker/docker-compose-rest.yml up -d`
