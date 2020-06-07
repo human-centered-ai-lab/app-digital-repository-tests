@@ -55,6 +55,18 @@ class Items:
         r = requests.delete (url, headers = h)
         print (url, " DELETED ", r.status_code )
 
+
+    def createRelationship (self, reltypeID, leftID, rightID):
+        url = self.aep + 'core/relationships?relationshipType=' + str(reltypeID)
+        uriListBody  = self.aep + 'core/items/' + leftID + ' \n ' + self.aep + 'core/items/' + rightID
+        h2 = h 
+        h2['Content-Type'] = 'text/uri-list' 
+        r = requests.post(url, headers = h2, data = uriListBody)   
+        status = r.status_code
+        createRespone = json.loads(r.content)
+        # print(json.dumps(createRespone,  indent=4, sort_keys=True))
+        return (status, createRespone['id'] )
+
     def metadataarray (self, values):
         ma = []
         for v in values:
@@ -120,7 +132,7 @@ class Items:
 
 
 
-runningEnv = 'bibbox'
+runningEnv = 'localhost'
 
 if runningEnv == 'bibbox':
     params = {'user':'v@bibbox.org', 'password':'vendetta'}
@@ -150,13 +162,22 @@ h = {'Authorization':r.headers['Authorization']}
 items =  Items (serverurlprefix + '/server/api/', h)
 
 founditems = items.itemsInScope(MUGtestcollection)
+
+
+'''
+for i in founditems:
+    print (i['id'], i['metadata']['relationship.type'][0]['value'])
+'''
 for i in founditems:
     items.deleteItem (i['id'])
-
 
 for i in range (1,2):
     print (i)
     status, slideid = items.createItem(MUGtestcollection, items.dummySlide())
     status, scanid1 = items.createItem(MUGtestcollection, items.dummyScan(slideid))
     status, scanid2 = items.createItem(MUGtestcollection, items.dummyScan(slideid))
-    print (slideid, scanid1, scanid2)
+    status, scanid3 = items.createItem(MUGtestcollection, items.dummyScan(slideid))
+    items.createRelationship (12, slideid, scanid1)
+    items.createRelationship (12, slideid, scanid2)
+    items.createRelationship (12, slideid, scanid3)
+    print (slideid, scanid1, scanid2, scanid3)
