@@ -39,20 +39,5 @@ Collection of python script to test and evaluate tools to build TDR, Trusted Dig
 * dump DB
     * `docker exec -t dspacedb pg_dumpall -c -U dspace  > db.sql`
 
-* how to access the demo
-
-    * http://gui.dspace.bibbox.org/
-    * http://rest.dspace.bibbox.org/server/#/server/api
-    *   user: v
-    *   password: vendetta
-    * http://adminer.dspace.bibbox.org/server/#/server/api
-
-## Usefull Links
-
-* dSpace REST Interface
-    * https://github.com/DSpace/
-    * https://dspace-labs.github.io/DSpace7RestTutorial/preparation
-
-
 
 
