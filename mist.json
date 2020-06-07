@@ -1031,7 +1031,7 @@
           "href": "http://dspace-rest.silicolab.bibbox.org/server/api/discover/search/objects?scope=eb6be443-f55e-466c-b2b3-aa6bae97686d"
         }
       }
-    },
+    },  
     "facets": [
       {
         "name": "author",
