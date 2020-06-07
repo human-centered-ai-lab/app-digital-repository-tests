@@ -155,8 +155,11 @@ class MetadataFields:
 
 #865f143a-cb9e-43cb-8a0d-9237df935ce0
 
-runningEnv = 'localhost'
+runningEnv = 'bibbox'
 
+if runningEnv == 'bibbox':
+    params = {'user':'v@bibbox.org', 'password':'vendetta'}
+    serverurlprefix  = 'http://rest.dspace.bibbox.org'
 if runningEnv == 'silicolab':
     params = {'user':'v@bibbox.org', 'password':'vendetta'}
     serverurlprefix  = 'http://dspace-rest.silicolab.bibbox.org'
@@ -206,6 +209,7 @@ status = mf.createMetadataField ("relation", slideOfScan)
 path = 'metadatafields'
 schemafiles = [f for f in listdir(path) if isfile(join(path, f))]
 
+
 for sf in schemafiles:
     schema = splitext(sf)[0]
     filename = join(path, sf)
@@ -221,6 +225,7 @@ for sf in schemafiles:
 
     metadatafields = mf.metadataFieldsForSchema(schema)
     print(json.dumps(metadatafields, indent=4, sort_keys=True))
+
 
     for mdf in metadatafields:
         status = mf.deleteMetadataField (mdf['id'])

@@ -119,7 +119,13 @@ class Items:
 
 
 
-runningEnv = 'localhost'
+
+runningEnv = 'bibbox'
+
+if runningEnv == 'bibbox':
+    params = {'user':'v@bibbox.org', 'password':'vendetta'}
+    serverurlprefix  = 'http://rest.dspace.bibbox.org'
+    MUGtestcollection = '5b655b1e-1855-42f5-b720-da7ad31e2fa5'
 
 if runningEnv == 'silicolab':
     params = {'user':'v@bibbox.org', 'password':'vendetta'}
@@ -142,8 +148,6 @@ r = requests.post(serverurlprefix + '/server/api/authn/login', params = params)
 h = {'Authorization':r.headers['Authorization']}
 
 items =  Items (serverurlprefix + '/server/api/', h)
-
-
 
 founditems = items.itemsInScope(MUGtestcollection)
 for i in founditems:
