@@ -9,6 +9,46 @@ class Items:
         self.aep    = api_entry_point
         self.h      = header
 
+    def relationships (self):
+        example = {
+            "id": 1,
+            "leftwardType": "isAuthorOfPublication",
+            "rightwardType": "isPublicationOfAuthor",
+            "copyToLeft": True,
+            "copyToRight": True,
+            "leftMinCardinality": 0,
+            "leftMaxCardinality": None,
+            "rightMinCardinality": 0,
+            "rightMaxCardinality": None,
+            "type": "relationshiptype",
+        }
+
+        relationships = []
+        stillPagesToRead = True
+        page = 0
+        while stillPagesToRead:
+            url = self.aep + 'core/relationshiptypes?page=' + str(page)
+            r = requests.get(url, headers = h)
+            halrespone = json.loads(r.content)
+            totalPages = halrespone['page']['totalPages']
+            pageNumber = halrespone['page']['number']
+            if  '_embedded' in halrespone.keys(): 
+                for mds in halrespone['_embedded']['relationshiptypes']:
+                    del mds ["_links"]
+                    relationships.append (mds)
+            page = page + 1
+            if (page  >= totalPages):
+                stillPagesToRead = False
+        return relationships
+
+    def relationshipsID (self, rightwardType, leftwardType):
+        rel = self.relationships()
+        id = -1
+        for r in rel:
+            if rightwardType == r['rightwardType'] and leftwardType == r['leftwardType'] : 
+                id = r['id']
+        return id
+
     def itemsInScope (self, scope):
         example = {
             "discoverable": True,
@@ -61,10 +101,12 @@ class Items:
         uriListBody  = self.aep + 'core/items/' + leftID + ' \n ' + self.aep + 'core/items/' + rightID
         h2 = h 
         h2['Content-Type'] = 'text/uri-list' 
+        #print (url)
+        #print (uriListBody)
         r = requests.post(url, headers = h2, data = uriListBody)   
         status = r.status_code
         createRespone = json.loads(r.content)
-        # print(json.dumps(createRespone,  indent=4, sort_keys=True))
+        #print(json.dumps(createRespone,  indent=4, sort_keys=True))
         return (status, createRespone['id'] )
 
     def metadataarray (self, values):
@@ -129,15 +171,13 @@ class Items:
 
         return scan    
 
-
-
-
-runningEnv = 'localhost'
+runningEnv = 'bibbox'
 
 if runningEnv == 'bibbox':
     params = {'user':'v@bibbox.org', 'password':'vendetta'}
     serverurlprefix  = 'http://rest.dspace.bibbox.org'
     MUGtestcollection = '5b655b1e-1855-42f5-b720-da7ad31e2fa5'
+
 
 if runningEnv == 'silicolab':
     params = {'user':'v@bibbox.org', 'password':'vendetta'}
@@ -148,7 +188,6 @@ if runningEnv == 'dspace':
     params = {'user':'dspacedemo+admin@gmail.com', 'password':'dspace'}
     serverurlprefix  = 'https://dspace7.4science.cloud'
     MUGtestcollection = '865f143a-cb9e-43cb-8a0d-9237df935ce0'
-
 
 if runningEnv == 'localhost':
     params = {'user':'v@bibbox.org', 'password':'vendetta'}
@@ -163,11 +202,16 @@ items =  Items (serverurlprefix + '/server/api/', h)
 
 founditems = items.itemsInScope(MUGtestcollection)
 
+relships = items.relationships()
 
-'''
+RelID = items.relationshipsID ("isSlideOfScan", "isScanOfSlide")
+
+# print(json.dumps(relships,  indent=4, sort_keys=True))
+#print(RelID)
+
 for i in founditems:
     print (i['id'], i['metadata']['relationship.type'][0]['value'])
-'''
+
 for i in founditems:
     items.deleteItem (i['id'])
 
@@ -177,7 +221,8 @@ for i in range (1,2):
     status, scanid1 = items.createItem(MUGtestcollection, items.dummyScan(slideid))
     status, scanid2 = items.createItem(MUGtestcollection, items.dummyScan(slideid))
     status, scanid3 = items.createItem(MUGtestcollection, items.dummyScan(slideid))
-    items.createRelationship (12, slideid, scanid1)
-    items.createRelationship (12, slideid, scanid2)
-    items.createRelationship (12, slideid, scanid3)
+    items.createRelationship (RelID, slideid, scanid1)
+    items.createRelationship (RelID, slideid, scanid2)
+    items.createRelationship (RelID, slideid, scanid3)
     print (slideid, scanid1, scanid2, scanid3)
+
