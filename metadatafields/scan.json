@@ -2,12 +2,17 @@
     {
         "element": "identifier",
         "qualifier": null,
-        "scopeNote": "Unique identifier of the scan"
+        "scopeNote": "Unique identifier of the scan process"
+    },
+    {
+        "element": "context",
+        "qualifier": null,
+        "scopeNote": "Human readable description of the Scan context, e.g. project name"
     },
     {
         "element": "operator",
         "qualifier":  null,
-        "scopeNote": "Responsible operator of the scanning process"
+        "scopeNote": "Responsible technical person of the scanning process"
     },
     {
         "element": "condition",
@@ -83,7 +88,7 @@
     {
         "element": "operation",
         "qualifier": "z-mode",
-        "scopeNote": "e.g: Single Layer, Z-Stacking, Extened Focus....)"
+        "scopeNote": "e.g: Single Layer, Z-Stacking, Extended Focus....)"
     },
     {
         "element": "compression",

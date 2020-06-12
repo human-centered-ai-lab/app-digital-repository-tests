@@ -5,11 +5,20 @@
         "scopeNote": "Unique identifier of the file"
     },
     {
+        "element": "context",
+        "qualifier": null,
+        "scopeNote": "Human readable description of the WSI context, e.g. project name"
+    },
+    {
         "element": "size",
         "qualifier": null,
         "scopeNote": "File size in byte"
     },
-
+    {
+        "element": "primary",
+        "qualifier": null,
+        "scopeNote": "Is the primary output of the scanning process"
+    },
     {
         "element": "format",
         "qualifier": "type",
@@ -24,6 +33,36 @@
         "element": "MD5Checksum",
         "qualifier": null,
         "scopeNote": "MD5 Checksum of the file"
+    },
+    {
+        "element": "imagesize",
+        "qualifier": "columns",
+        "scopeNote": "number of columns of the baseline image"
+    },
+    {
+        "element": "imagesize",
+        "qualifier": "rows",
+        "scopeNote": "number of rows of the baseline image"
+    },
+    {
+        "element": "imagesize",
+        "qualifier": "spatial-resolution",
+        "scopeNote": "spatial-resultion in micometer of the baseline image"
+    },
+    {
+        "element": "image-matrix-origin",
+        "qualifier": "x",
+        "scopeNote": "x offset in slide coordinate system"
+    },
+    {
+        "element": "image-matrix-origin",
+        "qualifier": "y",
+        "scopeNote": "y offset in slide coordinate system"
+    },
+    {
+        "element": "image-matrix-origin",
+        "qualifier": "z",
+        "scopeNote": "z offset in slide coordinate system"
     },
     {
         "element": "compression",
@@ -52,7 +91,7 @@
     },
     {
         "element": "contains",
-        "qualifier":  "label",
+        "qualifier":  "anonymized-label",
         "scopeNote": "Flag if a label image is available"
     },
     {

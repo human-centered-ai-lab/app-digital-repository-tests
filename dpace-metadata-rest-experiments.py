@@ -152,10 +152,19 @@ class MetadataFields:
         r = requests.delete (url, headers = h)
         print (url, " DELETED ", r.status_code )
 
+    def createRelationMetadatafield (self, relationMetadataField):
+        description = {
+            "element": relationMetadataField,
+            "qualifier": None,
+            "scopeNote": "",
+            "type": "metadatafield"
+                }
+        status = mf.createMetadataField ("relation", description)
+        return status
 
 #865f143a-cb9e-43cb-8a0d-9237df935ce0
 
-runningEnv = 'bibbox'
+runningEnv = 'localhost'
 
 if runningEnv == 'bibbox':
     params = {'user':'v@bibbox.org', 'password':'vendetta'}
@@ -188,23 +197,17 @@ schema = 'project'
 metadatafields = mf.metadataFieldsForSchema(schema)
 print(json.dumps(metadatafields, indent=4, sort_keys=True))
 
-scanOfSlide = {
-            "element": "isScanOfSlide",
-            "qualifier": None,
-            "scopeNote": "",
-            "type": "metadatafield"
-                }
+mf.createRelationMetadatafield ("isScanOfSlide")
+mf.createRelationMetadatafield ("isSlideOfScan")
 
-slideOfScan = {
-            "element": "isSlideOfScan",
-            "qualifier": None,
-            "scopeNote": "",
-            "type": "metadatafield"
-                }
+mf.createRelationMetadatafield ("isScanOfWsi")
+mf.createRelationMetadatafield ("isWsiOfScan")
 
-status = mf.createMetadataField ("relation", scanOfSlide)
-status = mf.createMetadataField ("relation", slideOfScan)
+mf.createRelationMetadatafield ("isTransformOfWsi")
+mf.createRelationMetadatafield ("isWsiOfTransform")
 
+mf.createRelationMetadatafield ("isWsiofSlide")
+mf.createRelationMetadatafield ("isSlideofWsi")
 
 path = 'metadatafields'
 schemafiles = [f for f in listdir(path) if isfile(join(path, f))]
@@ -225,7 +228,6 @@ for sf in schemafiles:
 
     metadatafields = mf.metadataFieldsForSchema(schema)
     print(json.dumps(metadatafields, indent=4, sort_keys=True))
-
 
     for mdf in metadatafields:
         status = mf.deleteMetadataField (mdf['id'])

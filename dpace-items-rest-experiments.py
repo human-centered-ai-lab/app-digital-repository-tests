@@ -1,7 +1,8 @@
 import json, requests
 import string
 import uuid
-
+import random
+from datetime import date
 
 class Items:
     
@@ -30,6 +31,7 @@ class Items:
             url = self.aep + 'core/relationshiptypes?page=' + str(page)
             r = requests.get(url, headers = self.h )
             halrespone = json.loads(r.content)
+            #print(json.dumps(halrespone,  indent=4, sort_keys=True))
             totalPages = halrespone['page']['totalPages']
             pageNumber = halrespone['page']['number']
             if  '_embedded' in halrespone.keys(): 
@@ -103,13 +105,13 @@ class Items:
         uriListBody  = self.aep + 'core/items/' + leftID + ' \n ' + self.aep + 'core/items/' + rightID
         h2 = self.h.copy() 
         h2['Content-Type'] = 'text/uri-list' 
-        #print (url)
-        #print (uriListBody)
+        print (url)
+        print (uriListBody)
         r = requests.post(url, headers = h2, data = uriListBody)   
         status = r.status_code
         print (url, " CREATED ", r.status_code)
         createRespone = json.loads(r.content)
-        #print(json.dumps(createRespone,  indent=4, sort_keys=True))
+        print(json.dumps(createRespone,  indent=4, sort_keys=True))
         return (status, createRespone['id'] )
 
     def metadataarray (self, values):
@@ -127,6 +129,7 @@ class Items:
 
     def dummySlide (self):
         slideUUID = str(uuid.uuid4())
+        
         slidemetadata = {
             "dc.contributor.author":      self.metadataarrayneutral (["Plass, Markus", "Müller, Heimo"]),
             "dc.title":                   self.metadataarray ([slideUUID]),
@@ -149,15 +152,99 @@ class Items:
 
         return slide
 
+    def dummyWSI (self, primary, slideid, scanid):
+        wsiUUID = str(uuid.uuid4())
+        now = date.today().isoformat()
+        author = random.choice (["Plass, Markus", "Heimo Müller", "Robert Reihs", "Simon Streit"]) 
+        wsiformat = random.choice (["MIRAX", "SVS", "TIFF", "DICOM"])
+        compression = random.choice (["JPEG", "JPEG2000", "UNCOMPRESSED"])
+        size =   random.randint(4000000000,12000000000)
+        sizeGB = str (int (10 * size / 1024 / 1024 / 1024 ) / 10) + " GByte"
+        usage =  random.choice (["Archive", "Processing", "Viewing", "ML"])
+        col = random.randint(10000,20000)
+        row = random.randint(5000,10000)
+        x = random.randint(2000,100000)
+        y = random.randint(30000,500000)
+        xstr = str (x / 10000)
+        ystr = str (y / 10000)
+        resolution = random.choice (["0.25", "0.125", "0.5"])
+        if (resolution == "0.125"):
+            col = 4 * col
+            row = 4 * row
+            mag = "80x"
+        if (resolution == "0.25"):
+            col = 2 * col
+            row = 2 * row
+            mag = "40x"
+        if (resolution == "0.5"):
+            mag = "20x"
+
+        wsiTitle = wsiformat + ", " + mag + ", " + str(col) + "x" + str(row) + ", " + sizeGB
+        wsimetadata = {
+            "dc.contributor.author":      self.metadataarrayneutral ([author]),
+            "dc.title":                   self.metadataarrayneutral ([wsiTitle]),
+            "wsi.size": self.metadataarrayneutral ([str(size)]),
+            "wsi.imagesize.columns": self.metadataarrayneutral ([str(col)]),
+            "wsi.imagesize.rows":    self.metadataarrayneutral ([str(row)]),  
+            "wsi.imagesize.spatial-resolution":     self.metadataarrayneutral ([resolution]),
+            "wsi.image-matrix-origin.x":     self.metadataarrayneutral ([xstr]),
+            "wsi.image-matrix-origin.y":     self.metadataarrayneutral ([ystr]),
+            "wsi.image-matrix-origin.z":   self.metadataarrayneutral (["0.000"]),   
+            "wsi.primary":      self.metadataarrayneutral ([primary]),
+            "wsi.format.type":      self.metadataarrayneutral ([wsiformat]),
+            "wsi.format.version":   self.metadataarrayneutral (["1.0"]),  
+            "wsi.MD5Checksum":     self.metadataarrayneutral (["aca28a846e26ffd9234212f9ceb4536f"]),
+            "wsi.compression.type":     self.metadataarrayneutral ([compression]),
+            "wsi.contains.previewimage":    self.metadataarrayneutral ([random.choice (["YES", "NO"])]), 
+            "wsi.contains.anonymized-label":  self.metadataarrayneutral ([random.choice (["YES", "NO"])]),   
+            "wsi.contains.label":     self.metadataarrayneutral ([random.choice (["YES", "NO"])]),  
+            "dc.type":                    self.metadataarrayneutral (["Wsi"]),
+            "relationship.type":          self.metadataarrayneutral (["Wsi"])
+        }
+
+        wsi = {
+            "name": wsiUUID,
+            "inArchive": True,
+            "discoverable": True,
+            "withdrawn": False,
+            "type": "Wsi",
+            "metadata": wsimetadata
+            }
+
+        #print(json.dumps(wsimetadata,  indent=4, sort_keys=True))
+
+        return wsi         
+
     def dummyScan (self, slideid):
         scanUUID = str(uuid.uuid4())
+        now = date.today().isoformat()
+ 
+        manufacturer = random.choice (["3D Histech", "Leica"])
+
+        resolution = random.choice (["0.25", "0.125", "0.5"])
+        if (resolution == "0.125"):
+            mag = "80x"
+        if (resolution == "0.25"):
+            mag = "40x"
+        if (resolution == "0.5"):
+            mag = "20x"
+
+        manufacturer = random.choice (["3D Histech", "Leica"])
+        if (manufacturer == "3D Histech"):
+            scannerType = random.choice (["P1000", "P250"])
+        if (manufacturer == "Leica"):
+            scannerType = random.choice (["AT2", "GT450"])
+
+        scanTitle = str(now) + ", " + manufacturer + " " + scannerType +", " + mag
         scanmetadata = {
             "dc.contributor.author":      self.metadataarrayneutral (["Plass, Markus", "Müller, Heimo"]),
-            "dc.title":                   self.metadataarrayneutral ([scanUUID]),
+            "dc.title":                   self.metadataarrayneutral ([scanTitle]),
             "scan.scanner.type":          self.metadataarrayneutral (["P1000"]),
             "scan.scanner.manufacturer":  self.metadataarrayneutral (["3D Histech"]),
             "scan.scanner.serial-number": self.metadataarrayneutral (["2991-99201-9919919"]),
             "scan.operator":              self.metadataarrayneutral (["Plass, Markus"]),
+            "scan.date":                  self.metadataarrayneutral ([str(now)]),
+            "scan.resolution":            self.metadataarrayneutral (resolution),  
             "dc.type":                    self.metadataarrayneutral (["scan"]),
             "relationship.type":          self.metadataarrayneutral (["Scan"]),
             "relation.isScanOfSlide":     self.metadataarray ([slideid])
@@ -174,7 +261,7 @@ class Items:
 
         return scan    
 
-runningEnv = 'bibbox'
+runningEnv = 'localhost'
 
 if runningEnv == 'bibbox':
     params = {'user':'v@bibbox.org', 'password':'vendetta'}
@@ -195,8 +282,11 @@ if runningEnv == 'dspace':
 if runningEnv == 'localhost':
     params = {'user':'v@bibbox.org', 'password':'vendetta'}
     serverurlprefix  = 'http://localhost:8080'
-    MUGtestcollection = 'ca5c1bb5-7886-40a1-8ead-65d9f5733785'
-
+    MUGtestcollection = 'f7692b7b-9409-4196-9c86-bab0e5b19dd4'
+    slides_col = '957d71be-ad6d-4708-a34d-d2218690d933'
+    scan_col = '8a5933d6-cb38-49f4-a802-e73cca7033d8'
+    wsi_col = 'cc0c1e74-66c8-4688-97df-304a11533e6c'
+    
 
 r = requests.post(serverurlprefix + '/server/api/authn/login', params = params) 
 h = {'Authorization':r.headers['Authorization']}
@@ -207,27 +297,49 @@ founditems = items.itemsInScope(MUGtestcollection)
 
 relships = items.relationships()
 
-RelID = items.relationshipsID ("isSlideOfScan", "isScanOfSlide")
+RelIDSlide2Scan = items.relationshipsID ("isSlideOfScan", "isScanOfSlide")
+RelIDScan2WSI = items.relationshipsID ("isScanOfWsi", "isWsiOfScan")
+RelIDSlide2WSI = items.relationshipsID ("isSlideOfWsi", "isWsiOfSlide")
+RelIDTransf2WSI = items.relationshipsID ("isTransformOfWsi", "isWsiOfTransform")
 
-# print(json.dumps(relships,  indent=4, sort_keys=True))
-#print(RelID)
+print(json.dumps(relships,  indent=4, sort_keys=True))
+print(RelIDSlide2Scan, RelIDScan2WSI, RelIDSlide2WSI, RelIDTransf2WSI)
+
 
 for i in founditems:
     print (i['id'], i['metadata']['relationship.type'][0]['value'])
 
-for i in founditems:
+for i in items.itemsInScope(MUGtestcollection):
+    items.deleteItem (i['id'])
+for i in items.itemsInScope(slides_col):
+    items.deleteItem (i['id'])
+for i in items.itemsInScope(scan_col):
+    items.deleteItem (i['id'])
+for i in items.itemsInScope(wsi_col):
     items.deleteItem (i['id'])
 
-for i in range (1,4):
+
+for i in range (1,200):
     print (i)
-    status, slideid = items.createItem(MUGtestcollection, items.dummySlide())
-    status, scanid1 = items.createItem(MUGtestcollection, items.dummyScan(slideid))
-    status, scanid2 = items.createItem(MUGtestcollection, items.dummyScan(slideid))
-    status, scanid3 = items.createItem(MUGtestcollection, items.dummyScan(slideid))
-    print (slideid, scanid1, scanid2, scanid3)
-    print (slideid ,scanid1 )
-    items.createRelationship (RelID, slideid, scanid1)
-    items.createRelationship (RelID, slideid, scanid2)
-    items.createRelationship (RelID, slideid, scanid3)
- 
+    status, slideid = items.createItem(slides_col, items.dummySlide())
+    status, scanid1 = items.createItem(scan_col, items.dummyScan(slideid))
+    status, wsiid1  = items.createItem(wsi_col, items.dummyWSI("YES", slideid, scanid1))
+    status, wsiid2  = items.createItem(wsi_col, items.dummyWSI("NO", slideid, scanid1))
+    status, wsiid3  = items.createItem(wsi_col, items.dummyWSI("NO", slideid, scanid1))
+    status, scanid2 = items.createItem(scan_col, items.dummyScan(slideid))
+    status, wsiid4  = items.createItem(wsi_col, items.dummyWSI("YES", slideid, scanid2))
+
+    items.createRelationship (RelIDSlide2Scan, slideid, scanid1)
+    items.createRelationship (RelIDSlide2Scan, slideid, scanid2)
+
+    items.createRelationship (RelIDScan2WSI,  scanid1, wsiid1)
+    items.createRelationship (RelIDScan2WSI,  scanid1, wsiid2)
+    items.createRelationship (RelIDScan2WSI,  scanid1, wsiid3)
+
+    items.createRelationship (RelIDScan2WSI,  scanid2, wsiid4)
+
+    items.createRelationship (RelIDSlide2WSI, slideid, wsiid1)
+    items.createRelationship (RelIDSlide2WSI, slideid, wsiid2)
+    items.createRelationship (RelIDSlide2WSI, slideid, wsiid3)
+    items.createRelationship (RelIDSlide2WSI, slideid, wsiid4)
 

@@ -5,6 +5,11 @@
         "scopeNote": "Identifier printed on the Label"
     },
     {
+        "element": "context",
+        "qualifier": null,
+        "scopeNote": "Human readable description of the slide context, e.g. biobank name"
+    },
+    {
         "element": "identifier",
         "qualifier": "uuidslide",
         "scopeNote": "UUID of the physical slide"
