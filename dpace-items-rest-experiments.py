@@ -4,6 +4,176 @@ import uuid
 import random
 from datetime import date
 
+
+class Communities:
+    def __init__(self, api_entry_point, header):
+        self.aep    = api_entry_point
+        self.h      = header
+
+    def communities (self):
+        example = {
+            "id": "579d7e3b-bf70-4f7c-8bdc-9c5c517bdce9",
+            "uuid": "579d7e3b-bf70-4f7c-8bdc-9c5c517bdce9",
+            "name": "Medical University of Graz",
+            "handle": "123456789/1",
+            "metadata" : {}
+        }
+
+        communities = []
+        stillPagesToRead = True
+        page = 0
+        while stillPagesToRead:
+            url = self.aep + 'core/communities/search/top?page=' + str(page)
+            r = requests.get(url, headers = self.h )
+            halrespone = json.loads(r.content)
+            #print(json.dumps(halrespone,  indent=4, sort_keys=True))
+            totalPages = halrespone['page']['totalPages']
+            pageNumber = halrespone['page']['number']
+            if  '_embedded' in halrespone.keys(): 
+                for mds in halrespone['_embedded']['communities']:
+                    del mds ["_links"]
+                    communities.append (mds)
+            page = page + 1
+            if (page  >= totalPages):
+                stillPagesToRead = False
+        return communities
+
+    def subcommunities (self, parent):
+        example = {
+            "id": "579d7e3b-bf70-4f7c-8bdc-9c5c517bdce9",
+            "uuid": "579d7e3b-bf70-4f7c-8bdc-9c5c517bdce9",
+            "name": "Medical University of Graz",
+            "handle": "123456789/1",
+            "metadata" : {}
+        }
+
+        subcommunities = []
+        stillPagesToRead = True
+        page = 0
+        while stillPagesToRead:
+            url = self.aep + 'core/communities/' + str(parent) + '/subcommunities?page=' + str(page)
+            r = requests.get(url, headers = self.h )
+            halrespone = json.loads(r.content)
+            #print (url)
+            #print(json.dumps(halrespone,  indent=4, sort_keys=True))
+            totalPages = halrespone['page']['totalPages']
+            pageNumber = halrespone['page']['number']
+            if  '_embedded' in halrespone.keys(): 
+                for mds in halrespone['_embedded']['subcommunities']:
+                    del mds ["_links"]
+                    subcommunities.append (mds)
+            page = page + 1
+            if (page  >= totalPages):
+                stillPagesToRead = False
+        return subcommunities
+
+    def collections (self, parent):
+        example = {
+            "id": "579d7e3b-bf70-4f7c-8bdc-9c5c517bdce9",
+            "uuid": "579d7e3b-bf70-4f7c-8bdc-9c5c517bdce9",
+            "name": "Medical University of Graz",
+            "handle": "123456789/1",
+            "metadata" : {}
+        }
+
+        collections = []
+        stillPagesToRead = True
+        page = 0
+        while stillPagesToRead:
+            url = self.aep + 'core/communities/' + str(parent) + '/collections?page=' + str(page)
+            r = requests.get(url, headers = self.h )
+            halrespone = json.loads(r.content)
+            #print(json.dumps(halrespone,  indent=4, sort_keys=True))
+            totalPages = halrespone['page']['totalPages']
+            pageNumber = halrespone['page']['number']
+            if  '_embedded' in halrespone.keys(): 
+                for mds in halrespone['_embedded']['collections']:
+                    del mds ["_links"]
+                    collections.append (mds)
+            page = page + 1
+            if (page  >= totalPages):
+                stillPagesToRead = False
+        return collections    
+
+    def topCommunityID (self, name):
+        com = self.communities()
+        id = -1
+        for c in com:
+            if name == c['name']: 
+                id = c['id']
+        return id
+
+    def communityID (self, name, parent):
+        com = self.subcommunities(parent)
+        id = -1
+        for c in com:
+            if name == c['name']: 
+                id = c['id']
+        return id
+
+    def collectionID (self, name, parent):
+        com = self.collections(parent)
+        id = -1
+        for c in com:
+            if name == c['name']: 
+                id = c['id']
+        return id
+
+
+    def createCommunity(self, name):
+
+        payload = {"type":{"value":"community"},
+                   "metadata":{"dc.title":[{"language":None,"value":name}],
+                            "dc.description":[{"language":None}],
+                            "dc.description.abstract":[{"language":None}],
+                            "dc.rights":[{"language":None}],
+                            "dc.description.tableofcontents":[{"language":None}]}}
+
+        url = self.aep + 'core/communities'
+        r = requests.post(url, headers = self.h , json = payload)   
+        status = r.status_code
+        createrespone = json.loads(r.content)
+        print (url, " CREATED ", r.status_code)
+        #print(json.dumps(item,  indent=4, sort_keys=True))
+        #print(json.dumps(createrespone,  indent=4, sort_keys=True))
+        return (status, createrespone['id'] )
+
+    def createSubCommunity(self, name, parent):
+
+        payload = {"type":{"value":"community"},
+                   "metadata":{"dc.title":[{"language":None,"value":name}],
+                            "dc.description":[{"language":None}],
+                            "dc.description.abstract":[{"language":None}],
+                            "dc.rights":[{"language":None}],
+                            "dc.description.tableofcontents":[{"language":None}]}}
+
+        url = self.aep + 'core/communities?parent='+str(parent)
+        r = requests.post(url, headers = self.h , json = payload)   
+        status = r.status_code
+        createrespone = json.loads(r.content)
+        #print (url, " CREATED ", r.status_code)
+        #print(json.dumps(createrespone,  indent=4, sort_keys=True))
+        return (status, createrespone['id'] )
+
+    def createCollection(self, name, parent):
+
+        payload = {"type":{"value":"community"},
+                   "metadata":{"dc.title":[{"language":None,"value":name}],
+                            "dc.description":[{"language":None}],
+                            "dc.description.abstract":[{"language":None}],
+                            "dc.rights":[{"language":None}],
+                            "dc.description.provenance":[{"language":None}],
+                            "dc.description.tableofcontents":[{"language":None}]}}
+
+        url = self.aep + 'core/collections?parent=' + str(parent)
+        r = requests.post(url, headers = self.h , json = payload)   
+        status = r.status_code
+        createrespone = json.loads(r.content)
+        print (url, " CREATED ", r.status_code)
+        #print(json.dumps(item,  indent=4, sort_keys=True))
+        #print(json.dumps(createrespone,  indent=4, sort_keys=True))
+        return (status, createrespone['id'] )
+
 class Items:
     
     def __init__(self, api_entry_point, header):
@@ -105,13 +275,13 @@ class Items:
         uriListBody  = self.aep + 'core/items/' + leftID + ' \n ' + self.aep + 'core/items/' + rightID
         h2 = self.h.copy() 
         h2['Content-Type'] = 'text/uri-list' 
-        print (url)
-        print (uriListBody)
+        #print (url)
+        #print (uriListBody)
         r = requests.post(url, headers = h2, data = uriListBody)   
         status = r.status_code
         print (url, " CREATED ", r.status_code)
         createRespone = json.loads(r.content)
-        print(json.dumps(createRespone,  indent=4, sort_keys=True))
+        #print(json.dumps(createRespone,  indent=4, sort_keys=True))
         return (status, createRespone['id'] )
 
     def metadataarray (self, values):
@@ -283,13 +453,31 @@ if runningEnv == 'localhost':
     params = {'user':'v@bibbox.org', 'password':'vendetta'}
     serverurlprefix  = 'http://localhost:8080'
     MUGtestcollection = 'f7692b7b-9409-4196-9c86-bab0e5b19dd4'
-    slides_col = '957d71be-ad6d-4708-a34d-d2218690d933'
-    scan_col = '8a5933d6-cb38-49f4-a802-e73cca7033d8'
-    wsi_col = 'cc0c1e74-66c8-4688-97df-304a11533e6c'
+
     
 
 r = requests.post(serverurlprefix + '/server/api/authn/login', params = params) 
 h = {'Authorization':r.headers['Authorization']}
+
+com =  Communities (serverurlprefix + '/server/api/', h)
+createCommunities = False
+
+if (createCommunities):
+    status, mugid   = com.createCommunity ("Medical University of Graz, Digital Assets")
+    print (mugid)
+    status, pathoid = com.createSubCommunity ("Institut of Pathology",mugid)
+    status, scanid  = com.createCollection ("Scans", pathoid)
+    status, slideid = com.createCollection ("Slides", pathoid)
+    status, wsiid   = com.createCollection ("Whole Slide Images", pathoid)
+
+mugcolid = com.topCommunityID ("Medical University of Graz, Digital Assets")
+pathocolid = com.communityID ("Institut of Pathology",mugcolid)
+scancolid = com.collectionID ("Scans", pathocolid)
+slidecolid = com.collectionID ("Slides", pathocolid)
+wsicolid = com.collectionID ("Whole Slide Images", pathocolid)
+
+print (mugcolid, pathocolid, scancolid, slidecolid, wsicolid)
+
 
 items =  Items (serverurlprefix + '/server/api/', h)
 
@@ -302,32 +490,30 @@ RelIDScan2WSI = items.relationshipsID ("isScanOfWsi", "isWsiOfScan")
 RelIDSlide2WSI = items.relationshipsID ("isSlideOfWsi", "isWsiOfSlide")
 RelIDTransf2WSI = items.relationshipsID ("isTransformOfWsi", "isWsiOfTransform")
 
-print(json.dumps(relships,  indent=4, sort_keys=True))
-print(RelIDSlide2Scan, RelIDScan2WSI, RelIDSlide2WSI, RelIDTransf2WSI)
+#print(json.dumps(relships,  indent=4, sort_keys=True))
+#print(RelIDSlide2Scan, RelIDScan2WSI, RelIDSlide2WSI, RelIDTransf2WSI)
 
 
 for i in founditems:
     print (i['id'], i['metadata']['relationship.type'][0]['value'])
 
-for i in items.itemsInScope(MUGtestcollection):
+for i in items.itemsInScope(slidecolid):
     items.deleteItem (i['id'])
-for i in items.itemsInScope(slides_col):
+for i in items.itemsInScope(scancolid):
     items.deleteItem (i['id'])
-for i in items.itemsInScope(scan_col):
-    items.deleteItem (i['id'])
-for i in items.itemsInScope(wsi_col):
+for i in items.itemsInScope(wsicolid):
     items.deleteItem (i['id'])
 
 
-for i in range (1,200):
+for i in range (1,5):
     print (i)
-    status, slideid = items.createItem(slides_col, items.dummySlide())
-    status, scanid1 = items.createItem(scan_col, items.dummyScan(slideid))
-    status, wsiid1  = items.createItem(wsi_col, items.dummyWSI("YES", slideid, scanid1))
-    status, wsiid2  = items.createItem(wsi_col, items.dummyWSI("NO", slideid, scanid1))
-    status, wsiid3  = items.createItem(wsi_col, items.dummyWSI("NO", slideid, scanid1))
-    status, scanid2 = items.createItem(scan_col, items.dummyScan(slideid))
-    status, wsiid4  = items.createItem(wsi_col, items.dummyWSI("YES", slideid, scanid2))
+    status, slideid = items.createItem(slidecolid, items.dummySlide())
+    status, scanid1 = items.createItem(scancolid, items.dummyScan(slideid))
+    status, wsiid1  = items.createItem(wsicolid, items.dummyWSI("YES", slideid, scanid1))
+    status, wsiid2  = items.createItem(wsicolid, items.dummyWSI("NO", slideid, scanid1))
+    status, wsiid3  = items.createItem(wsicolid, items.dummyWSI("NO", slideid, scanid1))
+    status, scanid2 = items.createItem(scancolid, items.dummyScan(slideid))
+    status, wsiid4  = items.createItem(wsicolid, items.dummyWSI("YES", slideid, scanid2))
 
     items.createRelationship (RelIDSlide2Scan, slideid, scanid1)
     items.createRelationship (RelIDSlide2Scan, slideid, scanid2)
