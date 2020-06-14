@@ -436,26 +436,19 @@ runningEnv = 'bibbox'
 if runningEnv == 'bibbox':
     params = {'user':'v@bibbox.org', 'password':'vendetta'}
     serverurlprefix  = 'http://rest.dspace.bibbox.org'
-    MUGtestcollection = '14885517-a24b-4a91-9229-67d931ec653e'
-
 
 if runningEnv == 'silicolab':
     params = {'user':'v@bibbox.org', 'password':'vendetta'}
     serverurlprefix  = 'http://dspace-rest.silicolab.bibbox.org'
-    MUGtestcollection = 'eb6be443-f55e-466c-b2b3-aa6bae97686d'
 
 if runningEnv == 'dspace':
     params = {'user':'dspacedemo+admin@gmail.com', 'password':'dspace'}
     serverurlprefix  = 'https://dspace7.4science.cloud'
-    MUGtestcollection = '865f143a-cb9e-43cb-8a0d-9237df935ce0'
 
 if runningEnv == 'localhost':
     params = {'user':'v@bibbox.org', 'password':'vendetta'}
     serverurlprefix  = 'http://localhost:8080'
-    MUGtestcollection = 'f7692b7b-9409-4196-9c86-bab0e5b19dd4'
-
     
-
 r = requests.post(serverurlprefix + '/server/api/authn/login', params = params) 
 h = {'Authorization':r.headers['Authorization']}
 
@@ -464,7 +457,6 @@ createCommunities = False
 
 if (createCommunities):
     status, mugid   = com.createCommunity ("Medical University of Graz, Digital Assets")
-    print (mugid)
     status, pathoid = com.createSubCommunity ("Institut of Pathology",mugid)
     status, scanid  = com.createCollection ("Scans", pathoid)
     status, slideid = com.createCollection ("Slides", pathoid)
