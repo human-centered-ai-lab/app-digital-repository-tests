@@ -164,7 +164,7 @@ class MetadataFields:
 
 #865f143a-cb9e-43cb-8a0d-9237df935ce0
 
-runningEnv = 'localhost'
+runningEnv = 'bibbox'
 
 if runningEnv == 'bibbox':
     params = {'user':'v@bibbox.org', 'password':'vendetta'}

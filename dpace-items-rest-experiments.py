@@ -431,7 +431,7 @@ class Items:
 
         return scan    
 
-runningEnv = 'localhost'
+runningEnv = 'bibbox'
 
 if runningEnv == 'bibbox':
     params = {'user':'v@bibbox.org', 'password':'vendetta'}
@@ -476,26 +476,21 @@ scancolid = com.collectionID ("Scans", pathocolid)
 slidecolid = com.collectionID ("Slides", pathocolid)
 wsicolid = com.collectionID ("Whole Slide Images", pathocolid)
 
+print ("COLLECTIONS")
 print (mugcolid, pathocolid, scancolid, slidecolid, wsicolid)
-
 
 items =  Items (serverurlprefix + '/server/api/', h)
 
-founditems = items.itemsInScope(MUGtestcollection)
 
 relships = items.relationships()
-
 RelIDSlide2Scan = items.relationshipsID ("isSlideOfScan", "isScanOfSlide")
 RelIDScan2WSI = items.relationshipsID ("isScanOfWsi", "isWsiOfScan")
 RelIDSlide2WSI = items.relationshipsID ("isSlideOfWsi", "isWsiOfSlide")
 RelIDTransf2WSI = items.relationshipsID ("isTransformOfWsi", "isWsiOfTransform")
 
 #print(json.dumps(relships,  indent=4, sort_keys=True))
-#print(RelIDSlide2Scan, RelIDScan2WSI, RelIDSlide2WSI, RelIDTransf2WSI)
-
-
-for i in founditems:
-    print (i['id'], i['metadata']['relationship.type'][0]['value'])
+print ("RELATIONSHIPS")
+print(RelIDSlide2Scan, RelIDScan2WSI, RelIDSlide2WSI, RelIDTransf2WSI)
 
 for i in items.itemsInScope(slidecolid):
     items.deleteItem (i['id'])
