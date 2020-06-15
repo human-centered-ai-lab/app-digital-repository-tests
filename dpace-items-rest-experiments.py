@@ -431,7 +431,7 @@ class Items:
 
         return scan    
 
-runningEnv = 'bibbox'
+runningEnv = 'silicolab'
 
 if runningEnv == 'bibbox':
     params = {'user':'v@bibbox.org', 'password':'vendetta'}
@@ -472,7 +472,6 @@ print ("COLLECTIONS")
 print (mugcolid, pathocolid, scancolid, slidecolid, wsicolid)
 
 items =  Items (serverurlprefix + '/server/api/', h)
-
 
 relships = items.relationships()
 RelIDSlide2Scan = items.relationshipsID ("isSlideOfScan", "isScanOfSlide")
