@@ -114,5 +114,21 @@
         "element": "previewimage",
         "qualifier": null,
         "scopeNote": "Preview image before cleaning and processing"
+    },
+    {
+        "element": "previewimage",
+        "qualifier": "original",
+        "scopeNote": "Preview image before cleaning and processing"
+    },
+     {
+        "element": "previewimage",
+        "qualifier": "pre",
+        "scopeNote": "Preview image before cleaning and processing"
+    },
+    {
+        "element": "context",
+        "qualifier": null,
+        "scopeNote": "some context"
     }
+
 ]

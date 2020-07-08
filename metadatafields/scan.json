@@ -42,7 +42,7 @@
     },
     {
         "element": "scanner",
-        "qualifier": "sw-version",
+        "qualifier": "sw_version",
         "scopeNote": "Software version of the scanner"
     },
     {
@@ -57,6 +57,16 @@
     },
     {
         "element": "resolution",
+        "qualifier": null,
+        "scopeNote": "Scanning resolution in µm/pixel"
+    },
+    {
+        "element": "resolution-x",
+        "qualifier": null,
+        "scopeNote": "Scanning resolution in µm/pixel"
+    },
+    {
+        "element": "resolution-y",
         "qualifier": null,
         "scopeNote": "Scanning resolution in µm/pixel"
     },
@@ -108,6 +118,11 @@
     {
         "element": "area",
         "qualifier": "y",
+        "scopeNote": "xxxx according to DICOM ..."
+    },
+    {
+        "element": "area",
+        "qualifier": "origin",
         "scopeNote": "xxxx according to DICOM ..."
     },
     {

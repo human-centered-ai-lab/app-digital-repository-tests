@@ -165,7 +165,7 @@ class MetadataFields:
 
 #865f143a-cb9e-43cb-8a0d-9237df935ce0
 
-runningEnv = 'silicolab'
+runningEnv = 'localhost'
 
 if runningEnv == 'silicolab':
     params = {'user': 'v@bibbox.org', 'password': 'vendetta'}
@@ -174,7 +174,7 @@ if runningEnv == 'dspace':
     params = {'user': 'dspacedemo+admin@gmail.com', 'password':'dspace'}
     serverurlprefix = 'https://dspace7.4science.cloud'
 if runningEnv == 'localhost':
-    params = {'user': 'v@bibbox.org', 'password':'vendetta'}
+    params = {'user': 'test@test.edu', 'password':'admin'}
     serverurlprefix = 'http://localhost:8080'
 
 r = requests.post(serverurlprefix + '/server/api/authn/login', params=params)
@@ -213,8 +213,39 @@ slideOfScan = {
             "type": "metadatafield"
                 }
 
+WsiOfScan = {
+            "element": "isWsiOfScan",
+            "qualifier": None,
+            "scopeNote": "",
+            "type": "metadatafield"
+                }
+
+scanOfWsi = {
+            "element": "isScanOfWsi",
+            "qualifier": None,
+            "scopeNote": "",
+            "type": "metadatafield"
+                }
+
+slideOfWsi = {
+            "element": "isSlideOfWsi",
+            "qualifier": None,
+            "scopeNote": "",
+            "type": "metadatafield"
+                }
+WsiOfslide = {
+            "element": "isWsiOfSlide",
+            "qualifier": None,
+            "scopeNote": "",
+            "type": "metadatafield"
+                }
+
 status = mf.createMetadataField ("relation", scanOfSlide)
 status = mf.createMetadataField ("relation", slideOfScan)
+status = mf.createMetadataField ("relation", scanOfWsi)
+status = mf.createMetadataField ("relation", WsiOfScan)
+status = mf.createMetadataField ("relation", slideOfWsi)
+status = mf.createMetadataField ("relation", WsiOfslide)
 
 
 path = 'metadatafields'
@@ -228,9 +259,9 @@ for sf in schemafiles:
     with open(filename) as f:
         schemadata = json.load(f)
 
-    print(json.dumps(schemadata, indent=4, sort_keys=True))
+    #print(json.dumps(schemadata, indent=4, sort_keys=True))
 
-    status = mf.createSchema (schema, "htttp://bbmri-eric.eu/schemas/"+schema)
+    status = mf.createSchema(schema, "htttp://bbmri-eric.eu/schemas/"+schema)
     print(status)
 
     metadatafields = mf.metadataFieldsForSchema(schema)
@@ -240,10 +271,10 @@ for sf in schemafiles:
         status = mf.deleteMetadataField(mdf['id'])
 
     for mdf in schemadata:
-        status = mf.createMetadataField (schema, mdf)
+        status = mf.createMetadataField(schema, mdf)
 
     metadatafields = mf.metadataFieldsForSchema(schema)
-    print(json.dumps(metadatafields, indent=4, sort_keys=True))
+    #print(json.dumps(metadatafields, indent=4, sort_keys=True))
 
 
 
