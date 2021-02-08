@@ -1,6 +1,6 @@
 # Digital Repositories Tests
 
-Collection of python script to test and evaluate tools to build TDR, Trusted Digital Repositories
+Collection of python script to test and evaluate tools to build a TDR (Trusted Digital Repository)
 
 
 ## generate a local environment and install packages
