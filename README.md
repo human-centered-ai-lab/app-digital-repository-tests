@@ -14,7 +14,7 @@ Collection of python script to test and evaluate tools to build a TDR (Trusted D
 
 ### Setup of DSpace using docker 
 
-Follow the [latest instructions] (https://wiki.lyrasis.org/display/DSPACE/Try+out+DSpace+7#TryoutDSpace7-InstallviaDocker) on how to install dSpace 7 via docker
+Follow the [latest instructions](https://wiki.lyrasis.org/display/DSPACE/Try+out+DSpace+7#TryoutDSpace7-InstallviaDocker) on how to install dSpace 7 via docker
 Alternatively:
 	
 * Install steps
@@ -40,14 +40,14 @@ Alternatively:
     * `docker exec -t dspacedb pg_dumpall -c -U dspace  > db.sql`
 
 ### Setup Test Environment 	
-*In order to use the python scrips 'as is', [add relationship types] (https://wiki.bibbox.org/index.php/DSpace) for digital pathology
+* In order to use the python scrips 'as is', [add relationship types](https://wiki.bibbox.org/index.php/DSpace) for digital pathology
 
-    * docker cp digital_pathology/relationship-types.xml dspace:/dspace/config/entities/relationship-types.xml
-    * docker exec -it dspace /bin/sh
-    * apt-get update
-    * apt-get install nano
-    * nano  /dspace/config/entities/relationship-types.xml
-    * /dspace/bin/dspace dsrun org.dspace.app.util.InitializeEntities -f /dspace/config/entities/relationship-types.xml
+    * `docker cp digital_pathology/relationship-types.xml dspace:/dspace/config/entities/relationship-types.xml`
+    * `docker exec -it dspace /bin/sh`
+    * `apt-get update`
+    * `apt-get install nano`
+    * `nano  /dspace/config/entities/relationship-types.xml`
+    * `/dspace/bin/dspace dsrun org.dspace.app.util.InitializeEntities -f /dspace/config/entities/relationship-types.xml`
 
 * Add metadata fields by running "dspace-metadata-rest-experiments.py"
 
