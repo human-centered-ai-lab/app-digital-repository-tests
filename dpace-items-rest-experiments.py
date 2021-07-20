@@ -1,14 +1,29 @@
-import json, requests
-import string
+import json
+import requests
 import uuid
 import random
 from datetime import date
 
 
+def xsrf_token_check (response, session):
+    if not len(response.cookies.keys()):
+        #print('no changes to token')
+        return
+
+    xsrfTokenIndex = -1
+
+    for index, value in enumerate(response.cookies.keys()):
+        if value == 'DSPACE-XSRF-COOKIE':
+            xsrfTokenIndex = index
+            break
+
+    session.headers.update({'X-XSRF-TOKEN': response.cookies.values()[xsrfTokenIndex]})
+
+
 class Communities:
-    def __init__(self, api_entry_point, header):
+    def __init__(self, api_entry_point):
         self.aep    = api_entry_point
-        self.h      = header
+
 
     def communities (self):
         example = {
@@ -24,7 +39,8 @@ class Communities:
         page = 0
         while stillPagesToRead:
             url = self.aep + 'core/communities/search/top?page=' + str(page)
-            r = requests.get(url, headers = self.h )
+            r = s.get(url)
+            xsrf_token_check(r,s)
             halrespone = json.loads(r.content)
             #print(json.dumps(halrespone,  indent=4, sort_keys=True))
             totalPages = halrespone['page']['totalPages']
@@ -52,7 +68,8 @@ class Communities:
         page = 0
         while stillPagesToRead:
             url = self.aep + 'core/communities/' + str(parent) + '/subcommunities?page=' + str(page)
-            r = requests.get(url, headers = self.h )
+            r = s.get(url)
+            xsrf_token_check(r, s)
             halrespone = json.loads(r.content)
             #print (url)
             #print(json.dumps(halrespone,  indent=4, sort_keys=True))
@@ -81,7 +98,8 @@ class Communities:
         page = 0
         while stillPagesToRead:
             url = self.aep + 'core/communities/' + str(parent) + '/collections?page=' + str(page)
-            r = requests.get(url, headers = self.h )
+            r = s.get(url)
+            xsrf_token_check(r, s)
             halrespone = json.loads(r.content)
             #print(json.dumps(halrespone,  indent=4, sort_keys=True))
             totalPages = halrespone['page']['totalPages']
@@ -130,10 +148,11 @@ class Communities:
                             "dc.description.tableofcontents":[{"language":None}]}}
 
         url = self.aep + 'core/communities'
-        r = requests.post(url, headers = self.h , json = payload)   
+        r = s.post(url, json = payload)
+        xsrf_token_check(r, s)
         status = r.status_code
         createrespone = json.loads(r.content)
-        print (url, " CREATED ", r.status_code)
+        print (url, " CREATED ", r.status_code, ' with ID ', createrespone['id'])
         #print(json.dumps(item,  indent=4, sort_keys=True))
         #print(json.dumps(createrespone,  indent=4, sort_keys=True))
         return (status, createrespone['id'] )
@@ -148,7 +167,8 @@ class Communities:
                             "dc.description.tableofcontents":[{"language":None}]}}
 
         url = self.aep + 'core/communities?parent='+str(parent)
-        r = requests.post(url, headers = self.h , json = payload)   
+        r = s.post(url, json = payload)
+        xsrf_token_check(r, s)
         status = r.status_code
         createrespone = json.loads(r.content)
         #print (url, " CREATED ", r.status_code)
@@ -166,7 +186,8 @@ class Communities:
                             "dc.description.tableofcontents":[{"language":None}]}}
 
         url = self.aep + 'core/collections?parent=' + str(parent)
-        r = requests.post(url, headers = self.h , json = payload)   
+        r = s.post(url, json = payload)
+        xsrf_token_check(r, s)
         status = r.status_code
         createrespone = json.loads(r.content)
         print (url, " CREATED ", r.status_code)
@@ -174,11 +195,11 @@ class Communities:
         #print(json.dumps(createrespone,  indent=4, sort_keys=True))
         return (status, createrespone['id'] )
 
+
 class Items:
     
-    def __init__(self, api_entry_point, header):
+    def __init__(self, api_entry_point):
         self.aep    = api_entry_point
-        self.h      = header
 
     def relationships (self):
         example = {
@@ -199,7 +220,8 @@ class Items:
         page = 0
         while stillPagesToRead:
             url = self.aep + 'core/relationshiptypes?page=' + str(page)
-            r = requests.get(url, headers = self.h )
+            r = s.get(url)
+            xsrf_token_check(r, s)
             halrespone = json.loads(r.content)
             #print(json.dumps(halrespone,  indent=4, sort_keys=True))
             totalPages = halrespone['page']['totalPages']
@@ -211,13 +233,18 @@ class Items:
             page = page + 1
             if (page  >= totalPages):
                 stillPagesToRead = False
+
         return relationships
 
     def relationshipsID (self, rightwardType, leftwardType):
         rel = self.relationships()
+        print('REL: ', rel)
         id = -1
         for r in rel:
-            if rightwardType == r['rightwardType'] and leftwardType == r['leftwardType'] : 
+            #print('ID:', r['id'] )
+            #print('rightwardType: ', r['rightwardType'])
+            #print('leftwardType: ', r['leftwardType'])
+            if rightwardType == r['rightwardType'] and leftwardType == r['leftwardType'] :
                 id = r['id']
         return id
 
@@ -236,7 +263,8 @@ class Items:
         page = 0
         while stillPagesToRead:
             url = self.aep + 'discover/search/objects?scope=' + scope +'&page=' + str(page)
-            r = requests.get(url, headers = self.h )
+            r = s.get(url)
+            xsrf_token_check(r, s)
             halrespone = json.loads(r.content)
             totalPages = 1
             #print(json.dumps(halrespone,  indent=4, sort_keys=True))
@@ -254,32 +282,36 @@ class Items:
         return items
 
     def createItem (self, collection_uiid, item):
+        #print('Collection UUID: ', collection_uiid)
+        #print('Item: ', item)
         url = self.aep + 'core/items?owningCollection=' + collection_uiid
-        r = requests.post(url, headers = self.h , json = item)   
+        r = s.post(url, json = item)
+        xsrf_token_check(r, s)
         status = r.status_code
         createrespone = json.loads(r.content)
         print (url, " CREATED ", r.status_code)
+        #print("r.Content: ", r.content)
         #print(json.dumps(item,  indent=4, sort_keys=True))
         #print(json.dumps(createrespone,  indent=4, sort_keys=True))
         return (status, createrespone['id'] )
 
-
     def deleteItem (self, item_uiid):
         url = self.aep + 'core/items/' + item_uiid        
-        r = requests.delete (url, headers = self.h )
+        r = s.delete (url)
+        xsrf_token_check(r, s)
         print (url, " DELETED ", r.status_code )
-
 
     def createRelationship (self, reltypeID, leftID, rightID):
         url = self.aep + 'core/relationships?relationshipType=' + str(reltypeID)
         uriListBody  = self.aep + 'core/items/' + leftID + ' \n ' + self.aep + 'core/items/' + rightID
-        h2 = self.h.copy() 
-        h2['Content-Type'] = 'text/uri-list' 
-        #print (url)
-        #print (uriListBody)
-        r = requests.post(url, headers = h2, data = uriListBody)   
+        r = s.post(url, headers = {'Content-Type': 'text/uri-list'}, data = uriListBody)
+        xsrf_token_check(r, s)
         status = r.status_code
         print (url, " CREATED ", r.status_code)
+        print('Response Content: ', r.content)
+        print('Request URL: ', r.request.url)
+        print('Request Headers: ', r.request.headers)
+        print('Request Body: \n', r.request.body)
         createRespone = json.loads(r.content)
         #print(json.dumps(createRespone,  indent=4, sort_keys=True))
         return (status, createRespone['id'] )
@@ -296,10 +328,9 @@ class Items:
             ma.append ({ "value":v, "authority": None,"confidence": -1 })
         return ma
 
-
     def dummySlide (self):
         slideUUID = str(uuid.uuid4())
-        
+
         slidemetadata = {
             "dc.contributor.author":      self.metadataarrayneutral (["Plass, Markus", "Müller, Heimo"]),
             "dc.title":                   self.metadataarray ([slideUUID]),
@@ -308,7 +339,7 @@ class Items:
             "slide.dimension.width":      self.metadataarrayneutral (["25"]),
             "slide.dimension.height":     self.metadataarrayneutral (["75"]),
             "dc.type":                    self.metadataarrayneutral (["slide"]),
-            "relationship.type":          self.metadataarrayneutral (["Slide"]),
+            "dspace.entity.type":          self.metadataarrayneutral (["Slide"])
         }
 
         slide = {
@@ -318,7 +349,7 @@ class Items:
             "withdrawn": False,
             "type": "Slide",
             "metadata": slidemetadata
-            }
+        }
 
         return slide
 
@@ -369,7 +400,7 @@ class Items:
             "wsi.contains.anonymized-label":  self.metadataarrayneutral ([random.choice (["YES", "NO"])]),   
             "wsi.contains.label":     self.metadataarrayneutral ([random.choice (["YES", "NO"])]),  
             "dc.type":                    self.metadataarrayneutral (["Wsi"]),
-            "relationship.type":          self.metadataarrayneutral (["Wsi"])
+            "dspace.entity.type":          self.metadataarrayneutral (["Wsi"])
         }
 
         wsi = {
@@ -416,7 +447,8 @@ class Items:
             "scan.date":                  self.metadataarrayneutral ([str(now)]),
             "scan.resolution":            self.metadataarrayneutral (resolution),  
             "dc.type":                    self.metadataarrayneutral (["scan"]),
-            "relationship.type":          self.metadataarrayneutral (["Scan"]),
+            #"relationship.type":          self.metadataarrayneutral (["Scan"]),
+            "dspace.entity.type":          self.metadataarrayneutral (["Scan"]),
             "relation.isScanOfSlide":     self.metadataarray ([slideid])
         }
 
@@ -429,9 +461,12 @@ class Items:
             "metadata": scanmetadata
             }
 
-        return scan    
+        return scan
 
-runningEnv = 'silicolab'
+
+# ----------------------------------------------------------
+# ~~ Enter running environment and admin-account login data
+runningEnv = 'localhost'
 
 if runningEnv == 'bibbox':
     params = {'user':'v@bibbox.org', 'password':'vendetta'}
@@ -446,14 +481,26 @@ if runningEnv == 'dspace':
     serverurlprefix  = 'https://dspace7.4science.cloud'
 
 if runningEnv == 'localhost':
-    params = {'user':'v@bibbox.org', 'password':'vendetta'}
+    params = {'user':'test@test.edu', 'password':'admin'}
     serverurlprefix  = 'http://localhost:8080'
-    
-r = requests.post(serverurlprefix + '/server/api/authn/login', params = params) 
-h = {'Authorization':r.headers['Authorization']}
 
-com =  Communities (serverurlprefix + '/server/api/', h)
-createCommunities = False
+
+# ~~ LOGIN
+s = requests.Session()
+r = s.get(serverurlprefix + '/server/api/authn/status')
+xsrf_token_check(r, s)
+
+r = s.post(serverurlprefix + '/server/api/authn/login', params = params)
+xsrf_token_check(r, s)
+s.headers.update({'Authorization': r.headers['Authorization']})
+
+r = s.get(serverurlprefix + '/server/api/authn/status')
+xsrf_token_check(r, s)
+print('Status after Login', r, ', ', r.content)
+
+# ~~ Create Communities if necessary
+com = Communities(serverurlprefix + '/server/api/')
+createCommunities = True
 
 if (createCommunities):
     status, mugid   = com.createCommunity ("Medical University of Graz, Digital Assets")
@@ -462,16 +509,18 @@ if (createCommunities):
     status, slideid = com.createCollection ("Slides", pathoid)
     status, wsiid   = com.createCollection ("Whole Slide Images", pathoid)
 
+
 mugcolid = com.topCommunityID ("Medical University of Graz, Digital Assets")
 pathocolid = com.communityID ("Institut of Pathology",mugcolid)
 scancolid = com.collectionID ("Scans", pathocolid)
 slidecolid = com.collectionID ("Slides", pathocolid)
 wsicolid = com.collectionID ("Whole Slide Images", pathocolid)
 
-print ("COLLECTIONS")
-print (mugcolid, pathocolid, scancolid, slidecolid, wsicolid)
+#print ("COLLECTIONS")
+#print (mugcolid, pathocolid, scancolid, slidecolid, wsicolid)
 
-items =  Items (serverurlprefix + '/server/api/', h)
+
+items =  Items (serverurlprefix + '/server/api/')
 
 relships = items.relationships()
 RelIDSlide2Scan = items.relationshipsID ("isSlideOfScan", "isScanOfSlide")
@@ -480,9 +529,9 @@ RelIDSlide2WSI = items.relationshipsID ("isSlideOfWsi", "isWsiOfSlide")
 RelIDTransf2WSI = items.relationshipsID ("isTransformOfWsi", "isWsiOfTransform")
 
 #print(json.dumps(relships,  indent=4, sort_keys=True))
-print ("RELATIONSHIPS")
-print(RelIDSlide2Scan, RelIDScan2WSI, RelIDSlide2WSI, RelIDTransf2WSI)
 
+
+# ~~ Delete Items in collections Slide, Scan, WSI
 for i in items.itemsInScope(slidecolid):
     items.deleteItem (i['id'])
 for i in items.itemsInScope(scancolid):
@@ -490,9 +539,9 @@ for i in items.itemsInScope(scancolid):
 for i in items.itemsInScope(wsicolid):
     items.deleteItem (i['id'])
 
-
+# ~~ Create Dummy Data for Slide, Scan, WSI with relations to each other
 for i in range (1,5):
-    print (i)
+    status, slideid = items.createItem(slidecolid, items.dummySlide())
     status, slideid = items.createItem(slidecolid, items.dummySlide())
     status, scanid1 = items.createItem(scancolid, items.dummyScan(slideid))
     status, wsiid1  = items.createItem(wsicolid, items.dummyWSI("YES", slideid, scanid1))
@@ -514,4 +563,3 @@ for i in range (1,5):
     items.createRelationship (RelIDSlide2WSI, slideid, wsiid2)
     items.createRelationship (RelIDSlide2WSI, slideid, wsiid3)
     items.createRelationship (RelIDSlide2WSI, slideid, wsiid4)
-

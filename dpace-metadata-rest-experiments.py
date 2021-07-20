@@ -1,12 +1,30 @@
 from os import listdir
 from os.path import isfile, join, splitext
-import json, requests
-import string
+import json
+import requests
+
+def xsrf_token_check (response, session):
+    if not len(response.cookies.keys()):
+        #print('no changes to token')
+        return
+
+    #print('Token Check - Response Keys:', response.cookies.keys())
+    #print('Token Check - Response Values:', response.cookies.values())
+
+    xsrfTokenIndex = 0
+
+    for index, value in enumerate(response.cookies.keys()):
+        if value == 'DSPACE-XSRF-COOKIE':
+            xsrfTokenIndex = index
+            break
+
+    print('DSPACE-XSRF-TOKEN : ', response.cookies.values()[xsrfTokenIndex])
+    session.headers.update({'X-XSRF-TOKEN': response.cookies.values()[xsrfTokenIndex]})
 
 class MetadataFields:
-    def __init__(self, api_entry_point, header):
+    def __init__(self, api_entry_point):
         self.aep    = api_entry_point
-        self.h      = header
+
 
     def  schemas (self):
         example = {
@@ -21,7 +39,7 @@ class MetadataFields:
         page = 0
         while stillPagesToRead:
             url = self.aep + 'core/metadataschemas?page=' + str(page)
-            r = requests.get(url, headers = h)
+            r = s.get(url)
             halrespone = json.loads(r.content)
             totalPages = halrespone['page']['totalPages']
             pageNumber = halrespone['page']['number']
@@ -49,13 +67,13 @@ class MetadataFields:
         status = -1
         if id > 0:
             url = self.aep + 'core/metadataschemas/' + str(id)  
-            r = requests.delete(url, headers = h)   
+            r = s.delete(url)
             status = r.status_code
         return (status)
 
     def createSchema (self, prefix, namespace):
         url = self.aep + 'core/metadataschemas'          
-        r = requests.post(url, headers = h, json = {"prefix": prefix, "namespace": namespace, "type": "metadataschema"})        
+        r = s.post(url, json = {"prefix": prefix, "namespace": namespace, "type": "metadataschema"})
         return (r.status_code)
 
     def metadataFieldsForSchema (self, schema):
@@ -71,7 +89,7 @@ class MetadataFields:
         page = 0
         while stillPagesToRead:
             url = self.aep + 'core/metadatafields/search/bySchema?schema=' + schema +'&page=' + str(page)
-            r = requests.get(url, headers = h)
+            r = s.get(url)
             halrespone = json.loads(r.content)
             totalPages = halrespone['page']['totalPages']
             pageNumber = halrespone['page']['number']
@@ -90,13 +108,13 @@ class MetadataFields:
         status = -1
         if id > 0:
             url = self.aep + 'core/metadatafields?schemaId=' + str(id)  
-            r = requests.post(url, headers = h, json = mdf)   
+            r = s.post(url, json = mdf)
             status = r.status_code
         return (status)
 
     def deleteMetadataField (self, id):
         url = self.aep + 'core/metadatafields/' + str(id)  
-        r = requests.delete(url, headers = h)   
+        r = s.delete(url)
         status = r.status_code
         return (status)
 
@@ -129,7 +147,7 @@ class MetadataFields:
         page = 0
         while stillPagesToRead:
             url = self.aep + 'discover/search/objects?scope=' + scope +'&page=' + str(page)
-            r = requests.get(url, headers = h)
+            r = s.get(url)
             halrespone = json.loads(r.content)
             totalPages = 1
             #print(json.dumps(halrespone,  indent=4, sort_keys=True))
@@ -149,7 +167,7 @@ class MetadataFields:
 
     def deleteItem (self, item_uiid):
         url = self.aep + 'core/items/' + item_uiid
-        r = requests.delete (url, headers = h)
+        r = s.delete (url)
         print (url, " DELETED ", r.status_code )
 
     def createRelationMetadatafield (self, relationMetadataField):
@@ -163,7 +181,9 @@ class MetadataFields:
         return status
 
 
-runningEnv = 'silicolab'
+# ----------------------------------------------------------
+# ~~ Enter running environment and admin-account login data
+runningEnv = 'localhost'
 
 if runningEnv == 'bibbox':
     params = {'user':'v@bibbox.org', 'password':'vendetta'}
@@ -175,13 +195,24 @@ if runningEnv == 'dspace':
     params = {'user':'dspacedemo+admin@gmail.com', 'password':'dspace'}
     serverurlprefix  = 'https://dspace7.4science.cloud'
 if runningEnv == 'localhost':
-    params = {'user':'v@bibbox.org', 'password':'vendetta'}
+    params = {'user':'test@test.edu', 'password':'admin'}
     serverurlprefix  = 'http://localhost:8080'
 
-r = requests.post(serverurlprefix + '/server/api/authn/login', params = params) 
-h = {'Authorization':r.headers['Authorization']}
+# ~~ LOGIN
+s = requests.Session()
+r = s.get(serverurlprefix + '/server/api/authn/status')
+xsrf_token_check(r, s)
 
-mf =  MetadataFields (serverurlprefix + '/server/api/', h)
+
+r = s.post(serverurlprefix + '/server/api/authn/login', params = params)
+xsrf_token_check(r, s)
+s.headers.update({'Authorization': r.headers['Authorization']})
+
+r = s.get(serverurlprefix + '/server/api/authn/status')
+xsrf_token_check(r, s)
+print('Status after Login', r, ', ', r.content)
+
+mf =  MetadataFields (serverurlprefix + '/server/api/')
 
 #schemas = mf.schemas()
 #print(json.dumps(schemas, indent=4, sort_keys=True))
@@ -191,6 +222,8 @@ mf =  MetadataFields (serverurlprefix + '/server/api/', h)
 #    metadatafields = mf.metadataFieldsForSchema(prefix)
 #    print ('=================== ' + prefix + ' ='+ '='*(25-len(prefix)) + ' ' + str(len(metadatafields)))
 #    mf.printMetadataFields (prefix, metadatafields)
+
+
 
 schema = 'project'
 metadatafields = mf.metadataFieldsForSchema(schema)
@@ -236,6 +269,5 @@ for sf in schemafiles:
 
     metadatafields = mf.metadataFieldsForSchema(schema)
     print(json.dumps(metadatafields, indent=4, sort_keys=True))
-
 
 
